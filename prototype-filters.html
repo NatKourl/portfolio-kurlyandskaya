@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking list — pin filters prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<style>
+/* ============================================================
+   Booking-list pin-filters prototype — self-contained.
+   Inspired by SeatOS, not a 1:1 copy. Filter names are blurred
+   on purpose (real data withheld). Local tokens only (--bk-).
+   ============================================================ */
+.bk{
+  --bk-bg:#F4F5F8; --bk-surface:#FFFFFF;
+  --bk-text:#20242E; --bk-muted:#8A91A3;
+  --bk-border:#E4E6EC; --bk-field-border:#D7DAE3;
+  --bk-primary:#4A45C9; --bk-ink:#262052;
+  --bk-chip:#262052; --bk-on-chip:#FFFFFF;
+  --bk-hover:#F0F0F8;
+  font-family:'Roboto',system-ui,sans-serif;color:var(--bk-text);
+  background:var(--bk-bg);border:1px solid var(--bk-border);border-radius:14px;overflow:hidden;
+  width:100%;container-type:inline-size}
+.bk *{box-sizing:border-box;margin:0;padding:0}
+.bk .material-symbols-outlined{font-family:'Material Symbols Outlined';font-weight:400;line-height:1;display:inline-block;vertical-align:middle}
+.bk-blur{filter:blur(3.4px);user-select:none;-webkit-user-select:none;pointer-events:none}
+
+/* toolbar */
+.bk-tools{background:var(--bk-surface);padding:16px 18px;border-bottom:1px solid var(--bk-border)}
+.bk-row1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.bk-search{flex:1;min-width:200px;display:flex;align-items:center;gap:8px;background:var(--bk-surface);
+  border:1px solid var(--bk-field-border);border-radius:8px;padding:9px 12px;color:var(--bk-muted)}
+.bk-search .material-symbols-outlined{font-size:19px}
+.bk-search input{border:0;outline:0;font-family:inherit;font-size:14px;color:var(--bk-text);background:transparent;width:100%}
+.bk-seg{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--bk-field-border);border-radius:8px;
+  padding:9px 12px;font-size:13.5px;color:var(--bk-text);white-space:nowrap;cursor:pointer}
+.bk-seg .material-symbols-outlined{font-size:18px;color:var(--bk-muted)}
+.bk-chip{border:1px solid var(--bk-field-border);background:var(--bk-surface);border-radius:8px;padding:9px 14px;
+  font-family:inherit;font-size:13.5px;color:var(--bk-text);cursor:pointer;white-space:nowrap}
+.bk-chip:hover{background:var(--bk-hover)}
+.bk-chip.active{background:var(--bk-chip);border-color:var(--bk-chip);color:var(--bk-on-chip);display:inline-flex;align-items:center;gap:7px}
+.bk-chip.active .material-symbols-outlined{font-size:17px}
+.bk-spacer{flex:1}
+.bk-pinbtn{display:inline-flex;align-items:center;gap:7px;border:0;background:transparent;cursor:pointer;
+  font-family:inherit;font-size:13.5px;font-weight:500;color:var(--bk-text);padding:8px 6px}
+.bk-pinbtn .material-symbols-outlined{font-size:19px;color:var(--bk-ink)}
+.bk-iconbtn{width:38px;height:38px;border:1px solid var(--bk-field-border);border-radius:8px;background:var(--bk-surface);
+  display:grid;place-items:center;cursor:pointer;color:var(--bk-ink)}
+.bk-iconbtn:hover{background:var(--bk-hover)}
+.bk-iconbtn.on{background:var(--bk-chip);border-color:var(--bk-chip);color:#fff}
+
+/* pinned filters row */
+.bk-pinned{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.bk-pinned:empty{display:none}
+.bk-field{flex:1 1 220px;min-width:180px;display:flex;align-items:center;justify-content:space-between;gap:8px;
+  border:1px solid var(--bk-field-border);border-radius:8px;padding:10px 12px;background:var(--bk-surface);font-size:14px}
+.bk-field .lbl{color:var(--bk-text)}
+.bk-field .material-symbols-outlined{font-size:19px;color:var(--bk-muted)}
+
+/* full filters panel */
+.bk-panel{display:none;margin-top:14px;border-top:1px dashed var(--bk-border);padding-top:16px}
+.bk-panel.open{display:block}
+.bk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.bk-fitem{display:flex;align-items:center;justify-content:space-between;gap:8px;
+  border:1px solid var(--bk-field-border);border-radius:8px;padding:10px 10px 10px 12px;background:var(--bk-surface);font-size:14px}
+.bk-fitem .left{display:flex;align-items:center;gap:8px;min-width:0}
+.bk-fitem .chev{font-size:19px;color:var(--bk-muted)}
+.bk-pin{flex:0 0 auto;width:30px;height:30px;border-radius:7px;border:1px solid transparent;background:transparent;
+  display:grid;place-items:center;cursor:pointer;color:var(--bk-muted)}
+.bk-pin:hover{background:var(--bk-hover);color:var(--bk-ink)}
+.bk-pin .material-symbols-outlined{font-size:18px}
+.bk-fitem.pinned .bk-pin{color:var(--bk-primary)}
+.bk-fitem.pinned{border-color:var(--bk-primary);box-shadow:inset 0 0 0 1px var(--bk-primary)}
+.bk-panel-foot{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+.bk-hint{font-size:12.5px;color:var(--bk-muted)}
+.bk-hint b{color:var(--bk-primary)}
+.bk-clear{border:1px solid var(--bk-field-border);background:var(--bk-surface);border-radius:8px;padding:9px 16px;
+  font-family:inherit;font-size:13.5px;cursor:pointer;color:var(--bk-text)}
+.bk-clear:hover{background:var(--bk-hover)}
+
+/* table */
+.bk-tablewrap{overflow-x:auto}
+.bk-table{width:100%;min-width:760px;border-collapse:collapse;font-size:13px;background:var(--bk-surface)}
+.bk-table th{text-align:left;padding:11px 14px;color:var(--bk-muted);font-weight:500;border-bottom:1px solid var(--bk-border);white-space:nowrap;background:#FBFBFD}
+.bk-table td{padding:12px 14px;border-bottom:1px solid var(--bk-border)}
+.bk-cell{height:8px;border-radius:4px;background:#E9EBF1}
+.bk-cell.w1{width:70%}.bk-cell.w2{width:90%}.bk-cell.w3{width:50%}
+.bk-badge{display:inline-block;font-size:11.5px;font-weight:500;padding:3px 9px;border-radius:999px}
+.bk-badge.ok{background:#DCF2E5;color:#2FA36C}.bk-badge.warn{background:#FBEFD7;color:#D9881C}.bk-badge.info{background:#E3E9FB;color:#5566D4}
+
+@container (max-width:720px){
+  .bk-grid{grid-template-columns:1fr 1fr}
+  .bk-spacer{display:none}
+}
+@container (max-width:520px){ .bk-grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body style="margin:0;padding:20px;background:#eceef3">
+<div style="max-width:1080px;margin:0 auto">
+  <div class="bk">
+    <div class="bk-tools">
+      <div class="bk-row1">
+        <div class="bk-search"><span class="material-symbols-outlined">search</span><input placeholder="Search booking…"></div>
+        <span class="bk-seg">By departure date<span class="material-symbols-outlined">expand_more</span></span>
+        <button class="bk-chip">Today</button>
+        <button class="bk-chip">Tomorrow</button>
+        <button class="bk-chip active"><span class="material-symbols-outlined">check</span>28 Mar – 3 Apr 2025</button>
+        <span class="bk-spacer"></span>
+        <button class="bk-pinbtn" id="bkPinBtn"><span class="material-symbols-outlined">push_pin</span>Pin filters</button>
+        <button class="bk-iconbtn" id="bkFunnel" aria-label="Toggle filters"><span class="material-symbols-outlined">filter_alt</span></button>
+      </div>
+
+      <!-- pinned filters (max 3) -->
+      <div class="bk-pinned" id="bkPinned"></div>
+
+      <!-- all filters panel -->
+      <div class="bk-panel" id="bkPanel">
+        <div class="bk-grid" id="bkGrid"></div>
+        <div class="bk-panel-foot">
+          <span class="bk-hint" id="bkHint">Pin up to <b>3</b> filters you use most — they stay on the bar.</span>
+          <button class="bk-clear" id="bkClear">Clear all</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="bk-tablewrap">
+      <table class="bk-table">
+        <thead><tr id="bkHead"></tr></thead>
+        <tbody id="bkBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var FILTERS = 14;            // number of filters (names blurred)
+  var MAX = 3;
+  var pinned = [0,3,6];        // default pinned indices
+  var grid=document.getElementById('bkGrid');
+  var pinnedRow=document.getElementById('bkPinned');
+  var panel=document.getElementById('bkPanel');
+  var hint=document.getElementById('bkHint');
+
+  // dummy labels (blurred so unreadable) — varied widths
+  var words=['Booking reference','Status','Check status','Route','Vehicle type','Departure point',
+             'Departure time','Arrival point','Account user','Payment state','Pay on site',
+             'Settle with agent','Sales channel','Trip group'];
+
+  function fieldChip(i){
+    return '<div class="bk-field"><span class="lbl bk-blur">'+words[i]+'</span>'+
+           '<span class="material-symbols-outlined">expand_more</span></div>';
+  }
+  function renderPinned(){
+    pinnedRow.innerHTML = pinned.map(fieldChip).join('');
+  }
+  function renderGrid(){
+    var html='';
+    for(var i=0;i<FILTERS;i++){
+      var on = pinned.indexOf(i)>-1;
+      html+='<div class="bk-fitem'+(on?' pinned':'')+'" data-i="'+i+'">'+
+              '<span class="left"><span class="lbl bk-blur">'+words[i]+'</span></span>'+
+              '<span class="left"><span class="material-symbols-outlined chev">expand_more</span>'+
+              '<button class="bk-pin" data-pin="'+i+'" title="'+(on?'Unpin':'Pin')+'">'+
+                '<span class="material-symbols-outlined">'+(on?'push_pin':'push_pin')+'</span></button></span>'+
+            '</div>';
+    }
+    grid.innerHTML=html;
+  }
+  function flashHint(msg){ hint.innerHTML=msg; hint.style.color='#C9544F'; setTimeout(function(){
+    hint.innerHTML='Pin up to <b>3</b> filters you use most — they stay on the bar.'; hint.style.color=''; },1600); }
+
+  grid.addEventListener('click',function(e){
+    var b=e.target.closest('[data-pin]'); if(!b) return;
+    var i=+b.getAttribute('data-pin');
+    var idx=pinned.indexOf(i);
+    if(idx>-1){ pinned.splice(idx,1); }
+    else if(pinned.length>=MAX){ flashHint('You can pin up to <b>3</b> filters. Unpin one first.'); return; }
+    else { pinned.push(i); }
+    renderPinned(); renderGrid();
+  });
+
+  function togglePanel(){ panel.classList.toggle('open');
+    document.getElementById('bkFunnel').classList.toggle('on', panel.classList.contains('open')); }
+  document.getElementById('bkPinBtn').addEventListener('click',togglePanel);
+  document.getElementById('bkFunnel').addEventListener('click',togglePanel);
+  document.getElementById('bkClear').addEventListener('click',function(){ pinned=[]; renderPinned(); renderGrid(); });
+
+  // table (generic, no real data)
+  var COLS=9, ROWS=7;
+  var head='<th>#</th>'; for(var c=1;c<COLS;c++) head+='<th><span class="bk-blur">Column '+c+'</span></th>';
+  document.getElementById('bkHead').innerHTML=head;
+  var badges=['<span class="bk-badge ok">Confirmed</span>','<span class="bk-badge warn">Pending</span>','<span class="bk-badge info">Checked-in</span>'];
+  var body='';
+  for(var r=0;r<ROWS;r++){
+    body+='<tr><td style="color:var(--bk-muted)">'+(1024+r)+'</td>';
+    for(var c=1;c<COLS;c++){
+      if(c===2){ body+='<td>'+badges[r%3]+'</td>'; }
+      else { var w=['w1','w2','w3'][(r+c)%3]; body+='<td><div class="bk-cell '+w+'"></div></td>'; }
+    }
+    body+='</tr>';
+  }
+  document.getElementById('bkBody').innerHTML=body;
+
+  renderPinned(); renderGrid();
+})();
+</script>
+</body>
+</html>

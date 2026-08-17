@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trip list — mobile prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<style>
+/* Trip list — mobile prototype (fake data). Inspired by SeatOS, self-contained. */
+html,body{height:100%}
+.tl{
+  --tl-surface:#FFFFFF; --tl-appbar:#2A2250; --tl-navy:#262052;
+  --tl-text:#20242E; --tl-muted:#8A91A3; --tl-border:#ECECF1; --tl-accent:#16BDD2;
+  --tl-row-sel:#F1F1F7;
+  position:relative;width:100%;height:100%;min-height:0;overflow:hidden;
+  background:var(--tl-surface);font-family:'Roboto',system-ui,sans-serif;color:var(--tl-text);
+  display:flex;flex-direction:column}
+.tl *{box-sizing:border-box;margin:0;padding:0}
+.tl .material-symbols-outlined{font-family:'Material Symbols Outlined';line-height:1;display:inline-block;vertical-align:middle}
+
+.tl-appbar{display:flex;align-items:center;gap:16px;background:var(--tl-appbar);color:#fff;padding:14px 16px}
+.tl-appbar .material-symbols-outlined{font-size:22px}
+.tl-appbar .sp{flex:1}
+.tl-appbar .av{width:30px;height:30px;border-radius:50%;background:var(--tl-accent);color:#08323a;
+  display:grid;place-items:center;font-size:12px;font-weight:700}
+.tl-appbar .divline{width:1px;height:24px;background:rgba(255,255,255,.25)}
+
+.tl-tabs{display:flex;gap:8px;padding:12px 14px 0;overflow-x:auto;scrollbar-width:none}
+.tl-tabs::-webkit-scrollbar{display:none}
+.tl-tab{flex:0 0 auto;font-size:14px;color:var(--tl-muted);padding:8px 12px;border-radius:8px;white-space:nowrap;cursor:pointer}
+.tl-tab.active{background:#ECECF2;color:var(--tl-text);font-weight:500}
+.tl-dates{display:flex;gap:8px;padding:12px 14px}
+.tl-chip{border:1px solid #D7DAE3;background:#fff;border-radius:8px;padding:8px 14px;font-family:inherit;font-size:13.5px;cursor:pointer;color:var(--tl-text)}
+.tl-chip.active{background:var(--tl-navy);border-color:var(--tl-navy);color:#fff;display:inline-flex;align-items:center;gap:6px}
+.tl-chip.active .material-symbols-outlined{font-size:16px}
+
+.tl-bulk{display:flex;align-items:center;gap:12px;padding:10px 14px;border-top:1px solid var(--tl-border)}
+.tl-bulk[hidden]{display:none}
+.tl-bulk .selall{width:18px;height:18px;border:1.6px solid #C2C6D2;border-radius:4px;display:grid;place-items:center;cursor:pointer;color:#fff}
+.tl-bulk .selall .material-symbols-outlined{font-size:14px;opacity:0}
+.tl-bulk .selall.on{background:var(--tl-navy);border-color:var(--tl-navy)}
+.tl-bulk .selall.on .material-symbols-outlined{opacity:1}
+.tl-count{background:var(--tl-accent);color:#06323a;font-weight:600;font-size:13px;border-radius:999px;padding:5px 12px}
+.tl-action{margin-left:auto;display:inline-flex;align-items:center;gap:6px;border:1px solid #D7DAE3;border-radius:8px;padding:8px 12px;font-family:inherit;font-size:13.5px;cursor:pointer;background:#fff;color:var(--tl-text)}
+.tl-action .material-symbols-outlined{font-size:18px;color:var(--tl-muted)}
+.tl-list{flex:1;overflow-y:auto;border-top:1px solid var(--tl-border)}
+.tl-row{display:grid;grid-template-columns:24px 1fr 28px;gap:10px;align-items:start;
+  padding:14px 14px;border-bottom:1px solid var(--tl-border);cursor:pointer}
+.tl-row.seld{background:var(--tl-row-sel)}
+.tl-cb{width:18px;height:18px;border:1.6px solid #C2C6D2;border-radius:4px;margin-top:2px;display:grid;place-items:center;color:#fff}
+.tl-cb .material-symbols-outlined{font-size:14px;opacity:0}
+.tl-row.seld .tl-cb{background:var(--tl-navy);border-color:var(--tl-navy)}
+.tl-row.seld .tl-cb .material-symbols-outlined{opacity:1}
+.tl-main .l1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tl-occ{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;padding:3px 9px;border-radius:999px}
+.tl-occ .material-symbols-outlined{font-size:15px}
+.tl-occ.teal{background:#D4F1EE;color:#11897C}
+.tl-occ.amber{background:#FBEFD7;color:#B5791A}
+.tl-occ.red{background:#FBE3E3;color:#C9544F}
+.tl-occ.grey{background:#E8E8EE;color:#8A8F9C}
+.tl-date{font-size:14px;color:var(--tl-text)}
+.tl-time{font-size:14px;font-weight:700;color:var(--tl-text)}
+.tl-route{font-size:14px;color:var(--tl-text);margin-top:6px;line-height:1.35}
+.tl-dots{border:0;background:transparent;color:var(--tl-muted);cursor:pointer;padding:2px;display:grid;place-items:center}
+.tl-dots .material-symbols-outlined{font-size:20px}
+
+.tl-fab{position:absolute;right:16px;bottom:18px;display:inline-flex;align-items:center;gap:8px;
+  background:var(--tl-navy);color:#fff;border:0;border-radius:999px;padding:13px 20px;font-family:inherit;
+  font-size:14px;font-weight:500;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.28);z-index:5}
+.tl-fab .material-symbols-outlined{font-size:18px}
+
+/* scrim + bottom sheets */
+.tl-scrim{position:absolute;inset:0;background:rgba(15,15,30,.42);opacity:0;visibility:hidden;transition:opacity .25s;z-index:8}
+.tl-scrim.show{opacity:1;visibility:visible}
+.tl-sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:18px 18px 0 0;z-index:9;
+  transform:translateY(102%);transition:transform .3s cubic-bezier(.2,0,0,1);max-height:86%;overflow-y:auto}
+.tl-sheet.open{transform:translateY(0)}
+.tl-handle{width:40px;height:4px;border-radius:999px;background:#D7DAE3;margin:10px auto 4px}
+.tl-sheet h4{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--tl-muted);font-weight:600;padding:8px 18px 6px}
+.tl-act{display:flex;align-items:center;gap:12px;padding:14px 18px;font-size:15px;cursor:pointer;border-top:1px solid var(--tl-border)}
+.tl-act:hover{background:#F6F6FA}
+.tl-act .material-symbols-outlined{font-size:20px;color:var(--tl-navy)}
+.tl-sheet .pad{padding:6px 18px 20px}
+.tl-field{display:flex;align-items:center;justify-content:space-between;border:1px solid #D7DAE3;border-radius:8px;
+  padding:11px 12px;font-size:14px;color:var(--tl-text);margin-top:10px}
+.tl-field .material-symbols-outlined{font-size:19px;color:var(--tl-muted)}
+.tl-sheetfoot{display:flex;gap:10px;padding:14px 18px;border-top:1px solid var(--tl-border)}
+.tl-btn{flex:1;border-radius:8px;padding:12px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;border:1px solid #D7DAE3;background:#fff;color:var(--tl-text)}
+.tl-btn.primary{background:var(--tl-navy);border-color:var(--tl-navy);color:#fff}
+.tl-toast{position:absolute;left:50%;bottom:84px;transform:translateX(-50%) translateY(10px);background:#20242E;color:#fff;
+  font-size:13px;padding:9px 16px;border-radius:999px;opacity:0;transition:.25s;z-index:11;white-space:nowrap}
+.tl-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body style="margin:0;background:#0e0e14">
+<div class="tl" id="tl">
+  <div class="tl-appbar">
+    <span class="material-symbols-outlined">menu</span>
+    <span class="material-symbols-outlined">apps</span>
+    <span class="sp"></span>
+    <span class="divline"></span>
+    <span class="av">OP</span>
+    <span class="material-symbols-outlined">expand_more</span>
+  </div>
+
+  <div class="tl-tabs">
+    <span class="tl-tab">Shared routes</span>
+    <span class="tl-tab">Private routes</span>
+    <span class="tl-tab active">Group tours</span>
+    <span class="tl-tab">Packages</span>
+  </div>
+
+  <div class="tl-dates">
+    <button class="tl-chip active"><span class="material-symbols-outlined">check</span>Today</button>
+    <button class="tl-chip">Tomorrow</button>
+    <button class="tl-chip">Custom</button>
+  </div>
+
+  <div class="tl-bulk" id="tlBulk" hidden>
+    <span class="selall" id="tlSelAll"><span class="material-symbols-outlined">check</span></span>
+    <span class="tl-count" id="tlCount">1 trip</span>
+    <button class="tl-action" id="tlActionBtn">Action<span class="material-symbols-outlined">expand_more</span></button>
+  </div>
+
+  <div class="tl-list" id="tlList"></div>
+
+  <button class="tl-fab" id="tlFilters"><span class="material-symbols-outlined">filter_alt</span>Filters</button>
+
+  <!-- scrim + sheets -->
+  <div class="tl-scrim" id="tlScrim"></div>
+
+  <div class="tl-sheet" id="tlActions">
+    <div class="tl-handle"></div>
+    <h4>Trip actions</h4>
+    <div class="tl-act" data-act="Activate"><span class="material-symbols-outlined">play_circle</span>Activate</div>
+    <div class="tl-act" data-act="Deactivate"><span class="material-symbols-outlined">pause_circle</span>Deactivate</div>
+    <div class="tl-act" data-act="Print manifest"><span class="material-symbols-outlined">list_alt</span>Print manifest</div>
+    <div class="tl-act" data-act="Print"><span class="material-symbols-outlined">print</span>Print</div>
+    <div class="tl-act" data-act="Change capacity"><span class="material-symbols-outlined">event_seat</span>Change capacity</div>
+    <div class="tl-act" data-act="Change departure time"><span class="material-symbols-outlined">schedule</span>Change departure time</div>
+    <div style="height:8px"></div>
+  </div>
+
+  <div class="tl-sheet" id="tlFilterSheet">
+    <div class="tl-handle"></div>
+    <h4>Filters</h4>
+    <div class="pad">
+      <div class="tl-field">Route<span class="material-symbols-outlined">expand_more</span></div>
+      <div class="tl-field">Status<span class="material-symbols-outlined">expand_more</span></div>
+      <div class="tl-field">Vehicle<span class="material-symbols-outlined">expand_more</span></div>
+    </div>
+    <div class="tl-sheetfoot">
+      <button class="tl-btn" id="tlClear">Clear all</button>
+      <button class="tl-btn primary" id="tlApply">Apply</button>
+    </div>
+  </div>
+
+  <div class="tl-sheet" id="tlBulkSheet">
+    <div class="tl-handle"></div>
+    <h4>Bulk actions · <span id="tlBulkCount">1 trip</span></h4>
+    <div class="tl-act" data-bulk="Change departure time"><span class="material-symbols-outlined">schedule</span>Change departure time</div>
+    <div class="tl-act" data-bulk="Cancel trips"><span class="material-symbols-outlined">cancel</span>Cancel trips</div>
+    <div style="height:8px"></div>
+  </div>
+
+  <div class="tl-toast" id="tlToast"></div>
+</div>
+
+<script>
+(function(){
+  var list=document.getElementById('tlList');
+  var bulk=document.getElementById('tlBulk');
+  var count=document.getElementById('tlCount');
+  var bulkCount=document.getElementById('tlBulkCount');
+  var selAll=document.getElementById('tlSelAll');
+  var scrim=document.getElementById('tlScrim');
+  var actions=document.getElementById('tlActions');
+  var fsheet=document.getElementById('tlFilterSheet');
+  var bulkSheet=document.getElementById('tlBulkSheet');
+  var toast=document.getElementById('tlToast');
+
+  var ROUTES={
+    'Shared routes':['Bangkok → Pattaya','Bangkok → Hua Hin','Phuket → Krabi','Chiang Mai → Pai','Bangkok → Ayutthaya','Surat Thani → Krabi','Hua Hin → Bangkok'],
+    'Private routes':['Private · Airport → Hotel','Private · Phuket Town → Patong','Private · Pier → Resort','Private · Hotel → Pier','Private · City → Airport','Private · Resort → Marina'],
+    'Group tours':['Surat Thani — Koh Samui Day Tour','Phuket — Phi Phi — Phuket','Krabi — Hong Islands — Krabi','Samui — Ang Thong — Samui','Khao Sok Lake Day Trip','Phang Nga Bay Tour','James Bond Island Tour'],
+    'Packages':['3-Day Island Hopper','Snorkel + Lunch Combo','Sunset Cruise Package','Full-Moon Weekend','Diving Starter Pack','Temple & Market Day']
+  };
+  var OCC=[{o:'40/48',c:'teal'},{o:'7/32',c:'amber'},{o:'15/32',c:'amber'},{o:'0/32',c:'red'},{o:'0/32',c:'grey'},{o:'32/48',c:'teal'},{o:'28/32',c:'amber'},{o:'48/48',c:'teal'},{o:'100/100',c:'teal'},{o:'5/32',c:'red'},{o:'22/48',c:'teal'},{o:'12/32',c:'amber'}];
+  var TIMES=['08:30','10:00','11:45','13:15','16:45','18:30'];
+  var DATELBL={'Today':'12 Jun 2023','Tomorrow':'13 Jun 2023','Custom':'12–18 Jun 2023'};
+
+  function activeTab(){ return document.querySelector('.tl-tab.active').textContent.trim(); }
+  function activeDate(){ var c=document.querySelector('.tl-chip.active'); return c?c.textContent.replace('check','').trim():'Today'; }
+  function seed(){ var ti=Object.keys(ROUTES).indexOf(activeTab()); var di=['Today','Tomorrow','Custom'].indexOf(activeDate()); return (ti+1)*13+(di+1)*7; }
+
+  var data=[], selected=new Set();
+  function buildData(){
+    var pool=ROUTES[activeTab()]||ROUTES['Group tours']; var s=seed();
+    var n=6+(s%5), dl=DATELBL[activeDate()]||'12 Jun 2023';
+    data=[];
+    for(var i=0;i<n;i++){
+      data.push({ route:pool[(s+i*3)%pool.length], occ:OCC[(s+i*5)%OCC.length], time:TIMES[(s+i*2)%TIMES.length], date:dl });
+    }
+    selected=new Set();
+  }
+  function render(){
+    list.innerHTML=data.map(function(r,i){
+      return '<div class="tl-row'+(selected.has(i)?' seld':'')+'" data-i="'+i+'">'+
+        '<span class="tl-cb"><span class="material-symbols-outlined">check</span></span>'+
+        '<div class="tl-main"><div class="l1">'+
+          '<span class="tl-occ '+r.occ.c+'"><span class="material-symbols-outlined">directions_bus</span>'+r.occ.o+'</span>'+
+          '<span class="tl-date">'+r.date+'</span><span class="tl-time">'+r.time+'</span></div>'+
+          '<div class="tl-route">'+r.route+'</div></div>'+
+        '<button class="tl-dots" data-dots="'+i+'" aria-label="Trip actions"><span class="material-symbols-outlined">more_vert</span></button>'+
+      '</div>';
+    }).join('');
+    updateBulk();
+  }
+  function updateBulk(){
+    if(selected.size){ var lbl=selected.size+' trip'+(selected.size>1?'s':'');
+      bulk.hidden=false; count.textContent=lbl; bulkCount.textContent=lbl;
+      selAll.classList.toggle('on', selected.size===data.length);
+    } else { bulk.hidden=true; selAll.classList.remove('on'); }
+  }
+
+  function openSheet(s){ scrim.classList.add('show'); s.classList.add('open'); }
+  function closeSheets(){ scrim.classList.remove('show'); actions.classList.remove('open'); fsheet.classList.remove('open'); bulkSheet.classList.remove('open'); }
+  scrim.addEventListener('click',closeSheets);
+
+  list.addEventListener('click',function(e){
+    var d=e.target.closest('[data-dots]');
+    if(d){ e.stopPropagation(); openSheet(actions); return; }
+    var row=e.target.closest('.tl-row'); if(!row) return;
+    var i=+row.getAttribute('data-i');
+    if(selected.has(i)) selected.delete(i); else selected.add(i);
+    render();
+  });
+  selAll.addEventListener('click',function(){
+    if(selected.size===data.length) selected=new Set();
+    else { selected=new Set(); data.forEach(function(_,i){ selected.add(i); }); }
+    render();
+  });
+  document.getElementById('tlActionBtn').addEventListener('click',function(){ openSheet(bulkSheet); });
+  bulkSheet.addEventListener('click',function(e){ var a=e.target.closest('[data-bulk]'); if(!a)return;
+    var n=selected.size; closeSheets(); selected=new Set(); render();
+    showToast(a.getAttribute('data-bulk')+' · '+n+' trip'+(n>1?'s':'')); });
+  actions.addEventListener('click',function(e){ var a=e.target.closest('[data-act]'); if(!a)return; closeSheets(); showToast(a.getAttribute('data-act')); });
+
+  document.getElementById('tlFilters').addEventListener('click',function(){ openSheet(fsheet); });
+  document.getElementById('tlApply').addEventListener('click',function(){ closeSheets(); showToast('Filters applied'); });
+  document.getElementById('tlClear').addEventListener('click',function(){ showToast('Filters cleared'); });
+
+  var tt;
+  function showToast(msg){ toast.textContent=msg; toast.classList.add('show'); clearTimeout(tt); tt=setTimeout(function(){ toast.classList.remove('show'); },1700); }
+
+  // tabs + date chips update the data
+  document.querySelector('.tl-tabs').addEventListener('click',function(e){ var t=e.target.closest('.tl-tab'); if(!t)return;
+    this.querySelectorAll('.tl-tab').forEach(function(x){x.classList.remove('active');}); t.classList.add('active'); buildData(); render(); });
+  document.querySelector('.tl-dates').addEventListener('click',function(e){ var c=e.target.closest('.tl-chip'); if(!c)return;
+    this.querySelectorAll('.tl-chip').forEach(function(x){x.classList.remove('active'); var ic=x.querySelector('.material-symbols-outlined'); if(ic) ic.remove();});
+    c.classList.add('active'); var i=document.createElement('span'); i.className='material-symbols-outlined'; i.textContent='check'; c.prepend(i);
+    buildData(); render(); });
+
+  buildData(); render();
+})();
+</script>
+</body>
+</html>

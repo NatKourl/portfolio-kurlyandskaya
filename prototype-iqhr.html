@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IQHR prototype — role views</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<style>
+/* ============================================================
+   IQHR prototype — self-contained components + colour table.
+   Colours sampled from the Figma prototype. Local tokens only.
+   ============================================================ */
+.iqhr{
+  --iq-green-1:#3FB58D;        /* sidebar gradient top    */
+  --iq-green-2:#88D0AB;        /* sidebar gradient bottom */
+  --iq-on-green:#FFFFFF;
+  --iq-nav-active:rgba(255,255,255,.20);
+  --iq-surface:#FFFFFF;
+  --iq-text:#2B2F36;
+  --iq-muted:#8A93A2;
+  --iq-icon:#5A6473;
+  --iq-border:#E7E9ED;
+  --iq-title-icon:#4FB58E;
+  --iq-link:#3FB58E;           /* clickable list titles    */
+  --iq-clock:#5A6473;
+  --iq-illus:#BCE2CE;
+  /* badges */
+  --iq-blue-bg:#E3E9FB;  --iq-blue-tx:#5566D4;
+  --iq-green-bg:#DCF2E5; --iq-green-tx:#2FA36C;
+  --iq-amber-bg:#FBEFD7; --iq-amber-tx:#D9881C;
+  /* trends */
+  --iq-up-bg:#D8F0E1;  --iq-up-tx:#2E9E6F;
+  --iq-down-bg:#FBE2E2;--iq-down-tx:#C9544F;
+  /* chart */
+  --iq-bar:#7C84E0; --iq-bar-track:#ECEEF8;
+  --iq-radius:10px;
+
+  font-family:'Roboto',system-ui,sans-serif;
+  color:var(--iq-text);background:var(--iq-surface);
+  border:1px solid var(--iq-border);border-radius:14px;overflow:hidden;
+  display:grid;grid-template-columns:150px 1fr;width:100%;container-type:inline-size;
+}
+.iqhr *{box-sizing:border-box;margin:0;padding:0}
+.iqhr .material-symbols-outlined{font-family:'Material Symbols Outlined';font-weight:400;font-style:normal;line-height:1;display:inline-block}
+
+/* sidebar */
+.iqhr-side{background:linear-gradient(180deg,var(--iq-green-1),var(--iq-green-2));color:var(--iq-on-green);
+  padding:22px 8px 28px;display:flex;flex-direction:column;gap:6px}
+.iqhr-logo{font-weight:700;font-size:22px;letter-spacing:.04em;text-align:center;margin-bottom:22px}
+.iqhr-nav{display:flex;flex-direction:column;gap:4px}
+.iqhr-nav a{display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;color:var(--iq-on-green);
+  text-decoration:none;font-size:12.5px;line-height:1.25;padding:12px 4px;border-radius:8px;transition:background .15s}
+.iqhr-nav a .material-symbols-outlined{font-size:24px}
+.iqhr-nav a:hover{background:rgba(255,255,255,.12)}
+.iqhr-nav a.active{background:var(--iq-nav-active);font-weight:500}
+
+/* main */
+.iqhr-main{display:flex;flex-direction:column;min-width:0}
+.iqhr-top{display:flex;justify-content:flex-end;align-items:center;gap:18px;padding:18px 26px;border-bottom:1px solid var(--iq-border)}
+.iqhr-top .material-symbols-outlined{font-size:22px;color:var(--iq-icon);cursor:pointer}
+.iqhr-body{padding:24px 26px 30px}
+.iqhr-body[hidden]{display:none}
+
+/* stats */
+.iqhr-stats{display:grid;grid-template-columns:repeat(4,1fr);margin-bottom:26px}
+.iqhr-stat{padding:2px 24px;border-left:1px solid var(--iq-border)}
+.iqhr-stat:first-child{border-left:0;padding-left:0}
+.iqhr-stat .lbl{font-size:14px;color:var(--iq-muted);margin-bottom:8px}
+.iqhr-stat .numrow{display:flex;align-items:center}
+.iqhr-stat .num{font-size:34px;font-weight:400;color:var(--iq-text);line-height:1}
+.trend{display:inline-flex;align-items:center;gap:3px;font-size:13px;font-weight:600;padding:4px 9px;border-radius:999px;margin-left:12px}
+.trend .material-symbols-outlined{font-size:15px}
+.trend.up{background:var(--iq-up-bg);color:var(--iq-up-tx)}
+.trend.down{background:var(--iq-down-bg);color:var(--iq-down-tx)}
+
+/* cards */
+.iqhr-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.iqhr-card{border:1px solid var(--iq-border);border-radius:var(--iq-radius);padding:18px 20px 18px;display:flex;flex-direction:column}
+.iqhr-card h3{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:500;color:var(--iq-text);margin-bottom:8px}
+.iqhr-card h3 .material-symbols-outlined{font-size:21px;color:var(--iq-title-icon)}
+.card-head-extra{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--iq-muted)}
+.card-head-extra .material-symbols-outlined{font-size:18px;color:var(--iq-icon)}
+
+/* list rows */
+.iqhr-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0}
+.iqhr-row .lead .title{font-size:15px;color:var(--iq-link);font-weight:500;cursor:pointer}
+.iqhr-row .lead .sub{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--iq-muted);margin-top:3px}
+.iqhr-row .lead .sub .material-symbols-outlined{font-size:15px;color:var(--iq-clock)}
+.badge{font-size:12.5px;font-weight:500;padding:6px 12px;border-radius:999px;white-space:nowrap}
+.badge.blue{background:var(--iq-blue-bg);color:var(--iq-blue-tx)}
+.badge.green{background:var(--iq-green-bg);color:var(--iq-green-tx)}
+.badge.amber{background:var(--iq-amber-bg);color:var(--iq-amber-tx)}
+.iqhr-meta{display:flex;align-items:center;gap:18px;color:var(--iq-muted);font-size:13px}
+.iqhr-meta span{display:inline-flex;align-items:center;gap:5px}
+.iqhr-meta .material-symbols-outlined{font-size:16px}
+
+/* workload chart */
+.work-row{display:grid;grid-template-columns:150px 1fr;align-items:center;gap:14px;padding:7px 0}
+.work-row .nm{font-size:14px;color:var(--iq-text)}
+.work-bar{height:9px;border-radius:999px;background:var(--iq-bar-track);overflow:hidden}
+.work-bar i{display:block;height:100%;background:var(--iq-bar);border-radius:999px}
+
+/* footer */
+.card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:14px;font-size:13px;color:var(--iq-muted)}
+.card-foot .all{display:inline-flex;align-items:center;gap:4px;color:var(--iq-text);cursor:pointer}
+.card-foot .all .material-symbols-outlined{font-size:16px}
+
+/* role switcher (prototype chrome) */
+.iqhr-roles{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;font-family:'Roboto',sans-serif}
+.iqhr-roles .ttl{font-size:13px;color:#8A93A2;margin-right:4px}
+.iqhr-role{font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;border-radius:999px;padding:8px 16px;
+  border:1px solid #E7E9ED;background:#fff;color:#2B2F36;transition:.15s}
+.iqhr-role:hover{border-color:#3FB58D}
+.iqhr-role.active{background:#3FB58D;border-color:#3FB58D;color:#fff}
+
+@container (max-width:760px){
+  .iqhr{grid-template-columns:1fr}
+  .iqhr-side{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:2px}
+  .iqhr-logo{width:100%;margin-bottom:10px}
+  .iqhr-nav{flex-direction:row;flex-wrap:wrap;justify-content:center}
+  .iqhr-nav a{width:84px}
+  .iqhr-stats{grid-template-columns:repeat(2,1fr);gap:18px 0}
+  .iqhr-stat:nth-child(3){border-left:0;padding-left:0}
+  .iqhr-grid{grid-template-columns:1fr}
+  .work-row{grid-template-columns:120px 1fr}
+}
+</style>
+</head>
+<body style="margin:0;padding:24px;background:#f3f3f7">
+<div style="max-width:1180px;margin:0 auto">
+
+  <div class="iqhr-roles" id="roleSwitch">
+    <span class="ttl">View as</span>
+    <button class="iqhr-role active" data-role="head">Head of recruitment</button>
+    <button class="iqhr-role" data-role="recruiter">Recruiter</button>
+    <button class="iqhr-role" data-role="hiring">Hiring manager</button>
+  </div>
+
+  <div class="iqhr">
+    <!-- Sidebar -->
+    <aside class="iqhr-side">
+      <div class="iqhr-logo">IQHR</div>
+      <nav class="iqhr-nav">
+        <a href="#" class="active"><span class="material-symbols-outlined">content_copy</span>Requests</a>
+        <a href="#"><span class="material-symbols-outlined">folder</span>Vacancies</a>
+        <a href="#"><span class="material-symbols-outlined">badge</span>Candidates</a>
+        <a href="#"><span class="material-symbols-outlined">request_quote</span>Offers</a>
+        <a href="#"><span class="material-symbols-outlined">account_tree</span>Org structure</a>
+        <a href="#"><span class="material-symbols-outlined">groups</span>Employees</a>
+        <a href="#"><span class="material-symbols-outlined">description</span>Email templates</a>
+        <a href="#"><span class="material-symbols-outlined">handshake</span>Approvals</a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <div class="iqhr-main">
+      <header class="iqhr-top">
+        <span class="material-symbols-outlined">calendar_month</span>
+        <span class="material-symbols-outlined">notifications</span>
+        <span class="material-symbols-outlined">help</span>
+        <span class="material-symbols-outlined">settings</span>
+        <span class="material-symbols-outlined">account_circle</span>
+      </header>
+
+      <!-- ===================== HEAD OF RECRUITMENT ===================== -->
+      <div class="iqhr-body" data-view="head">
+        <div class="iqhr-stats">
+          <div class="iqhr-stat"><div class="lbl">Requests</div><div class="numrow"><span class="num">48</span><span class="trend up"><span class="material-symbols-outlined">trending_up</span>+14</span></div></div>
+          <div class="iqhr-stat"><div class="lbl">Your requests</div><div class="numrow"><span class="num">5</span><span class="trend down"><span class="material-symbols-outlined">trending_down</span>-1</span></div></div>
+          <div class="iqhr-stat"><div class="lbl">Vacancies in progress</div><div class="numrow"><span class="num">62</span><span class="trend up"><span class="material-symbols-outlined">trending_up</span>+12</span></div></div>
+          <div class="iqhr-stat"><div class="lbl">Closed vacancies</div><div class="numrow"><span class="num">18</span><span class="trend up"><span class="material-symbols-outlined">trending_up</span>+4</span></div></div>
+        </div>
+        <div class="iqhr-grid">
+          <div class="iqhr-card">
+            <h3><span class="material-symbols-outlined">content_copy</span>Your requests</h3>
+            <div class="iqhr-row"><div class="lead"><div class="title">1123 Project manager</div><div class="sub"><span class="material-symbols-outlined">schedule</span>C&amp;B</div></div><span class="badge blue">In approval</span></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">1123 DevOps engineer</div><div class="sub"><span class="material-symbols-outlined">schedule</span>C&amp;B</div></div><span class="badge blue">In approval</span></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">1123 Front-end developer</div><div class="sub"><span class="material-symbols-outlined">schedule</span>C&amp;B</div></div><span class="badge green">Approved</span></div>
+            <div class="card-foot"><span>3 more</span><span class="all">Show all<span class="material-symbols-outlined">chevron_right</span></span></div>
+          </div>
+          <div class="iqhr-card">
+            <h3><span class="material-symbols-outlined">donut_small</span>Recruiter workload<span class="card-head-extra">Sep 18<span class="material-symbols-outlined">calendar_month</span></span></h3>
+            <div class="work-row"><span class="nm">Leonid Demchenko</span><span class="work-bar"><i style="width:72%"></i></span></div>
+            <div class="work-row"><span class="nm">Olga Lavrova</span><span class="work-bar"><i style="width:40%"></i></span></div>
+            <div class="work-row"><span class="nm">Svetlana Igoreva</span><span class="work-bar"><i style="width:60%"></i></span></div>
+            <div class="work-row"><span class="nm">Gavriil Pagasov</span><span class="work-bar"><i style="width:85%"></i></span></div>
+            <div class="work-row"><span class="nm">Alexander Timofeev</span><span class="work-bar"><i style="width:55%"></i></span></div>
+            <div class="card-foot"><span>7 more</span><span class="all">Show all<span class="material-symbols-outlined">chevron_right</span></span></div>
+          </div>
+          <div class="iqhr-card">
+            <h3><span class="material-symbols-outlined">groups</span>Candidates in vacancies</h3>
+            <div class="iqhr-row"><div class="lead"><div class="title">Ilya Kirilchuk</div><div class="sub">Project manager</div></div><span class="badge green">Interview with recruiter</span></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">Igor Ivanov</div><div class="sub">Project manager</div></div><span class="badge blue">Interview with manager</span></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">Anna Petrova</div><div class="sub">Project manager</div></div><span class="badge amber">Testing</span></div>
+            <div class="card-foot"><span>21 more</span><span class="all">Show all<span class="material-symbols-outlined">chevron_right</span></span></div>
+          </div>
+          <div class="iqhr-card">
+            <h3><span class="material-symbols-outlined">badge</span>Your vacancies</h3>
+            <div class="iqhr-row"><div class="lead"><div class="title">1123 Project manager</div><div class="sub">Fedor Uryupin</div></div><div class="iqhr-meta"><span><span class="material-symbols-outlined">group</span>1</span><span><span class="material-symbols-outlined">schedule</span>09.02.2022</span></div></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">1379 Secretary</div><div class="sub">Ilya Filisov</div></div><div class="iqhr-meta"><span><span class="material-symbols-outlined">group</span>14</span><span><span class="material-symbols-outlined">schedule</span>20.02.2022</span></div></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">Processing dept. assistant</div><div class="sub">Fedor Uryupin</div></div><div class="iqhr-meta"><span><span class="material-symbols-outlined">group</span>7</span><span><span class="material-symbols-outlined">schedule</span>23.02.2022</span></div></div>
+            <div class="card-foot"><span>7 more</span><span class="all">Show all<span class="material-symbols-outlined">chevron_right</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== RECRUITER ===================== -->
+      <div class="iqhr-body" data-view="recruiter" hidden>
+        <div class="iqhr-stats">
+          <div class="iqhr-stat"><div class="lbl">Your requests</div><div class="numrow"><span class="num">5</span><span class="trend up"><span class="material-symbols-outlined">trending_up</span>+2</span></div></div>
+          <div class="iqhr-stat"><div class="lbl">Your vacancies</div><div class="numrow"><span class="num">8</span><span class="trend up"><span class="material-symbols-outlined">trending_up</span>+1</span></div></div>
+          <div class="iqhr-stat"><div class="lbl">Candidates in vacancies</div><div class="numrow"><span class="num">24</span><span class="trend up"><span class="material-symbols-outlined">trending_up</span>+6</span></div></div>
+          <div class="iqhr-stat"><div class="lbl">Your offers</div><div class="numrow"><span class="num">3</span></div></div>
+        </div>
+        <div class="iqhr-grid">
+          <div class="iqhr-card">
+            <h3><span class="material-symbols-outlined">content_copy</span>Your requests</h3>
+            <div class="iqhr-row"><div class="lead"><div class="title">1142 QA engineer</div><div class="sub"><span class="material-symbols-outlined">schedule</span>C&amp;B</div></div><span class="badge blue">In approval</span></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">1143 Sales manager</div><div class="sub"><span class="material-symbols-outlined">schedule</span>C&amp;B</div></div><span class="badge green">Approved</span></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">1150 UX designer</div><div class="sub"><span class="material-symbols-outlined">schedule</span>C&amp;B</div></div><span class="badge blue">In approval</span></div>
+            <div class="card-foot"><span>2 more</span><span class="all">Show all<span class="material-symbols-outlined">chevron_right</span></span></div>
+          </div>
+          <div class="iqhr-card">
+            <h3><span class="material-symbols-outlined">badge</span>Your vacancies</h3>
+            <div class="iqhr-row"><div class="lead"><div class="title">1142 QA engineer</div><div class="sub">Fedor Uryupin</div></div><div class="iqhr-meta"><span><span class="material-symbols-outlined">group</span>6</span><span><span class="material-symbols-outlined">schedule</span>12.03.2022</span></div></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">1150 UX designer</div><div class="sub">Olga Lavrova</div></div><div class="iqhr-meta"><span><span class="material-symbols-outlined">group</span>9</span><span><span class="material-symbols-outlined">schedule</span>15.03.2022</span></div></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">1161 Support specialist</div><div class="sub">Ilya Filisov</div></div><div class="iqhr-meta"><span><span class="material-symbols-outlined">group</span>4</span><span><span class="material-symbols-outlined">schedule</span>18.03.2022</span></div></div>
+            <div class="card-foot"><span>5 more</span><span class="all">Show all<span class="material-symbols-outlined">chevron_right</span></span></div>
+          </div>
+          <div class="iqhr-card">
+            <h3><span class="material-symbols-outlined">groups</span>Candidates in vacancies</h3>
+            <div class="iqhr-row"><div class="lead"><div class="title">Maria Sokolova</div><div class="sub">UX designer</div></div><span class="badge green">Interview with recruiter</span></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">Dmitry Orlov</div><div class="sub">QA engineer</div></div><span class="badge blue">Interview with manager</span></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">Pavel Egorov</div><div class="sub">Support specialist</div></div><span class="badge amber">Testing</span></div>
+            <div class="card-foot"><span>21 more</span><span class="all">Show all<span class="material-symbols-outlined">chevron_right</span></span></div>
+          </div>
+          <div class="iqhr-card">
+            <h3><span class="material-symbols-outlined">assignment_turned_in</span>Your offers</h3>
+            <div class="iqhr-row"><div class="lead"><div class="title">Maria Sokolova</div><div class="sub">UX designer</div></div><span class="badge blue">Awaiting approval</span></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">Dmitry Orlov</div><div class="sub">QA engineer</div></div><span class="badge green">Approved</span></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">Nina Belova</div><div class="sub">Sales manager</div></div><span class="badge amber">Sent</span></div>
+            <div class="card-foot"><span>1 more</span><span class="all">Show all<span class="material-symbols-outlined">chevron_right</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== HIRING MANAGER ===================== -->
+      <div class="iqhr-body" data-view="hiring" hidden>
+        <div class="iqhr-stats">
+          <div class="iqhr-stat"><div class="lbl">Your requests</div><div class="numrow"><span class="num">3</span><span class="trend up"><span class="material-symbols-outlined">trending_up</span>+1</span></div></div>
+          <div class="iqhr-stat"><div class="lbl">Your vacancies</div><div class="numrow"><span class="num">4</span></div></div>
+          <div class="iqhr-stat"><div class="lbl">Candidates in vacancies</div><div class="numrow"><span class="num">12</span><span class="trend up"><span class="material-symbols-outlined">trending_up</span>+3</span></div></div>
+          <div class="iqhr-stat"><div class="lbl">Your offers</div><div class="numrow"><span class="num">2</span><span class="trend up"><span class="material-symbols-outlined">trending_up</span>+1</span></div></div>
+        </div>
+        <div class="iqhr-grid">
+          <div class="iqhr-card">
+            <h3><span class="material-symbols-outlined">content_copy</span>Your requests</h3>
+            <div class="iqhr-row"><div class="lead"><div class="title">1207 Team lead</div><div class="sub"><span class="material-symbols-outlined">schedule</span>C&amp;B</div></div><span class="badge blue">In approval</span></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">1208 Backend engineer</div><div class="sub"><span class="material-symbols-outlined">schedule</span>C&amp;B</div></div><span class="badge green">Approved</span></div>
+            <div class="card-foot"><span>1 more</span><span class="all">Show all<span class="material-symbols-outlined">chevron_right</span></span></div>
+          </div>
+          <div class="iqhr-card">
+            <h3><span class="material-symbols-outlined">badge</span>Your vacancies</h3>
+            <div class="iqhr-row"><div class="lead"><div class="title">1207 Team lead</div><div class="sub">Fedor Uryupin</div></div><div class="iqhr-meta"><span><span class="material-symbols-outlined">group</span>5</span><span><span class="material-symbols-outlined">schedule</span>05.04.2022</span></div></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">1208 Backend engineer</div><div class="sub">Olga Lavrova</div></div><div class="iqhr-meta"><span><span class="material-symbols-outlined">group</span>11</span><span><span class="material-symbols-outlined">schedule</span>09.04.2022</span></div></div>
+            <div class="card-foot"><span>2 more</span><span class="all">Show all<span class="material-symbols-outlined">chevron_right</span></span></div>
+          </div>
+          <div class="iqhr-card">
+            <h3><span class="material-symbols-outlined">groups</span>Candidates in vacancies</h3>
+            <div class="iqhr-row"><div class="lead"><div class="title">Sergey Volkov</div><div class="sub">Backend engineer</div></div><span class="badge blue">Interview with manager</span></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">Elena Morozova</div><div class="sub">Team lead</div></div><span class="badge green">Final interview</span></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">Artem Kuznetsov</div><div class="sub">Backend engineer</div></div><span class="badge amber">Testing</span></div>
+            <div class="card-foot"><span>9 more</span><span class="all">Show all<span class="material-symbols-outlined">chevron_right</span></span></div>
+          </div>
+          <div class="iqhr-card">
+            <h3><span class="material-symbols-outlined">assignment_turned_in</span>Your offers</h3>
+            <div class="iqhr-row"><div class="lead"><div class="title">Elena Morozova</div><div class="sub">Team lead</div></div><span class="badge blue">Awaiting approval</span></div>
+            <div class="iqhr-row"><div class="lead"><div class="title">Sergey Volkov</div><div class="sub">Backend engineer</div></div><span class="badge green">Approved</span></div>
+            <div class="card-foot"><span>&nbsp;</span><span class="all">Show all<span class="material-symbols-outlined">chevron_right</span></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var sw=document.getElementById('roleSwitch');
+  var views=document.querySelectorAll('.iqhr-body');
+  sw.addEventListener('click',function(e){
+    var b=e.target.closest('.iqhr-role'); if(!b) return;
+    sw.querySelectorAll('.iqhr-role').forEach(function(x){ x.classList.toggle('active',x===b); });
+    views.forEach(function(v){ v.hidden = (v.getAttribute('data-view')!==b.dataset.role); });
+  });
+})();
+</script>
+</body>
+</html>

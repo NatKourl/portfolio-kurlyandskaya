@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark" data-contrast="standard">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Редизайн фильтров в списке бронирований — Кейс · Наталия Курляндская</title>
+<meta name="description" content="Редизайн фильтров в таблице бронирований с 20+ столбцами — на основе аналитики, с персональным закреплением фильтров. Кейс Наталии Курляндской.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Serif:opsz,wght@8..144,400;8..144,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="appbar">
+  <div class="wrap appbar-inner">
+    <a class="brand" href="index.html#top">Наталия&nbsp;<b>Курляндская</b></a>
+    <nav class="nav">
+      <a class="case-back" href="manifest.html"><span class="material-symbols-outlined">arrow_back</span>Предыдущий кейс</a>
+      <a class="case-fwd" href="trips.html">Следующий кейс<span class="material-symbols-outlined">arrow_forward</span></a>
+      <div class="display-wrap">
+        <button class="icon-btn" id="displayBtn" aria-label="Настройки отображения" aria-expanded="false" title="Тема и контраст">
+          <span class="material-symbols-outlined">contrast</span>
+        </button>
+        <div class="panel" id="displayPanel" role="dialog" aria-label="Настройки отображения">
+          <div class="group">
+            <h3>Тема</h3>
+            <div class="seg" id="themeSeg" role="group" aria-label="Тема">
+              <button data-theme-val="light" aria-pressed="true"><span class="material-symbols-outlined">light_mode</span>Светлая</button>
+              <button data-theme-val="dark" aria-pressed="false"><span class="material-symbols-outlined">dark_mode</span>Тёмная</button>
+            </div>
+          </div>
+          <div class="group">
+            <h3>Контраст</h3>
+            <p class="hint">Посмотрите страницу с любым уровнем контраста.</p>
+            <div class="seg" id="contrastSeg" role="group" aria-label="Контраст">
+              <button data-contrast-val="standard" aria-pressed="true">Стандартный</button>
+              <button data-contrast-val="medium" aria-pressed="false">Средний</button>
+              <button data-contrast-val="high" aria-pressed="false">Высокий</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="case-hero">
+  <div class="wrap">
+    <span class="eyebrow case-eyebrow" style="display:flex;width:fit-content"><span class="dot"></span>SeatOS · UX-улучшение · Таблица данных · На основе аналитики</span>
+    <h1 class="case-title">Список бронирований — редизайн фильтров</h1>
+    <p class="case-sum">Таблица бронирований несёт 20+ столбцов и почти столько же фильтров. Я использовала продуктовую аналитику, чтобы понять, какими фильтрами люди действительно пользуются, а затем дала каждому пользователю способ держать свои самые используемые фильтры в одном клике — не перегружая тех, кому нужно лишь найти бронирование.</p>
+    <div class="case-meta">
+      <div class="m"><span class="k">Тип</span><span class="v">UX-улучшение</span></div>
+      <div class="m"><span class="k">Для кого</span><span class="v">Менеджеры, владельцы, бухгалтеры, кассиры</span></div>
+      <div class="m"><span class="k">Проблема</span><span class="v">Перегруженный интерфейс, высокое трение</span></div>
+      <div class="m"><span class="k">Метрики</span><span class="v">Время на задачу, частота ошибок</span></div>
+      <div class="m"><span class="k">Что улучшаем</span><span class="v">Вовлечённость · DAU/MAU</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+<div class="case-body">
+
+  <section class="case-section">
+    <span class="label">Проблема</span>
+    <h2>Фильтры съедали экран</h2>
+    <p>В таблице бронирований больше 20 столбцов и почти столько же фильтров. В исходной вёрстке фильтры занимали почти половину экрана и создавали много визуального шума. Мы решили свернуть их в раскрывающуюся панель — и, прежде чем решать, что оставить на виду, выяснить, какими фильтрами люди действительно пользуются.</p>
+    <figure class="board-fig">
+      <img class="js-zoom" src="assets/filters/bookings-list-before.jpg" alt="Список бронирований до редизайна — раскрытый блок фильтров занимает почти половину области просмотра над таблицей" loading="lazy">
+      <figcaption>Список бронирований — до. Блок фильтров занимал примерно половину области просмотра ещё до начала таблицы. Нажмите для увеличения.</figcaption>
+    </figure>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Исследование</span>
+    <h2>Пусть данные укажут путь</h2>
+    <p>Я не могла поговорить с пользователями напрямую — а в B2B слишком много сценариев, чтобы спроектировать что-то, что подходит всем сразу. Поэтому я разметила фильтры событиями через Google Tag Manager и собирала использование в течение месяца, чтобы увидеть, какие из них выходят в топ. Когда данных набралось достаточно, я посмотрела несколько десятков сессий Hotjar, чтобы понять контекст за цифрами.</p>
+    <figure class="ga-shot">
+      <div class="frame">
+        <img src="assets/filters/ga.png" alt="Google Analytics — события фильтров и разбивка по разрешениям экрана" oncontextmenu="return false" onerror="this.style.display='none';this.parentNode.querySelector('.ph').style.display='grid'">
+        <div class="ph"><span class="material-symbols-outlined">image</span><span class="t">Положите <b>assets/filters/ga.png</b></span></div>
+        <span class="rb"><span class="material-symbols-outlined">lock</span>Данные под NDA · только просмотр</span>
+      </div>
+      <figcaption>Google Analytics — счётчики событий фильтров и распределение разрешений экрана, которые легли в основу редизайна (слегка размыто).</figcaption>
+    </figure>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Что показала аналитика</span>
+    <h2>Один поиск, пять любимцев, много ролей</h2>
+    <p>Самым используемым действием был поиск конкретного бронирования. Помимо него выделились пять фильтров как самые часто используемые. Загвоздка: этими пятью пользовались не одни и те же люди — разные роли полагались на разные, а многим менеджерам не нужно было ничего, кроме поиска бронирования.</p>
+    <p>Так что единый фиксированный набор «дефолтных» фильтров был бы неправильным почти для всех. Правильный дефолт был разным для каждой роли — и часто для каждого человека.</p>
+    <p>И всё же некоторые фильтры были явными любимцами для многих пользователей:</p>
+    <div class="stickies">
+      <div class="sticky">Фильтр по дате — <b>сегодня</b>, <b>завтра</b> и произвольный диапазон дат.</div>
+      <div class="sticky">Поиск по <b>ID бронирования</b>.</div>
+      <div class="sticky">Фильтр по <b>маршруту</b>.</div>
+      <div class="sticky"><b>Станция отправления</b> и <b>время отправления</b>.</div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Решение</span>
+    <h2>Закрепление фильтров — персональное по замыслу</h2>
+    <p>Вместо того чтобы угадывать универсальный набор, мы дали каждому пользователю закреплять три фильтра, которыми он лично пользуется чаще всего. Закреплённые фильтры остаются на панели; всё остальное живёт в одном клике в раскрывающейся панели. Тот, кто только ищет бронирования, получает чистую панель; продвинутый пользователь держит свои ключевые фильтры под рукой.</p>
+    <p>Чтобы привлечь внимание пользователей к изменению, мы выпустили три самых популярных фильтра как валидные преднастроенные закрепления. Сам редизайн был разбит на три подзадачи — этот пример охватывает только работу над функциональностью закрепления фильтров.</p>
+    <figure class="board-fig">
+      <img class="js-zoom" src="assets/filters/filters-redesign-board.svg" alt="Рабочая доска — макеты и состояния закрепления фильтров" loading="lazy">
+      <figcaption>Рабочая доска — макеты и состояния закрепления фильтров. Нажмите для увеличения.</figcaption>
+    </figure>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Интерактивный прототип</span>
+    <h2>Попробуйте закрепить фильтры</h2>
+    <p class="muted">Откройте панель фильтров, закрепите до трёх и посмотрите, как они появляются на панели. Названия фильтров размыты — суть в самом паттерне.</p>
+    <div class="case-embed wide">
+      <div class="frame">
+        <iframe src="prototype-filters.html" title="Список бронирований — прототип закрепления фильтров" loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Результат</span>
+    <div class="case-metrics">
+      <div class="stat"><div class="n">~100%</div><div class="l">пользователей работают с переработанными фильтрами — используют почти все</div></div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="case-next">
+      <a class="btn btn-outline" href="index.html#work"><span class="material-symbols-outlined">arrow_back</span>Все проекты</a>
+      <a class="btn btn-filled js-mail" href="#" data-u="natk72" data-d="gmail.com"><span class="material-symbols-outlined">mail</span>Связаться</a>
+    </div>
+    <p class="copyright">© 2026 Наталия Курляндская · Собрано на токенах Material Design 3.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var btn=document.getElementById('displayBtn');
+  var panel=document.getElementById('displayPanel');
+  var themeSeg=document.getElementById('themeSeg');
+  var contrastSeg=document.getElementById('contrastSeg');
+  try{
+    var st=localStorage.getItem('nk-theme'), sc=localStorage.getItem('nk-contrast');
+    if(!st && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){ st='dark'; }
+    if(st) root.setAttribute('data-theme',st);
+    if(sc) root.setAttribute('data-contrast',sc);
+  }catch(e){}
+  function syncAll(){
+    themeSeg.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed',String(b.dataset.themeVal===root.getAttribute('data-theme'))); });
+    contrastSeg.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed',String(b.dataset.contrastVal===root.getAttribute('data-contrast'))); });
+  }
+  syncAll();
+  function openPanel(o){ panel.classList.toggle('open',o); btn.setAttribute('aria-expanded',String(o)); }
+  btn.addEventListener('click',function(e){ e.stopPropagation(); openPanel(!panel.classList.contains('open')); });
+  document.addEventListener('click',function(e){ if(!panel.contains(e.target)&&e.target!==btn) openPanel(false); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') openPanel(false); });
+  themeSeg.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return; root.setAttribute('data-theme',b.dataset.themeVal); try{localStorage.setItem('nk-theme',b.dataset.themeVal);}catch(e){} syncAll(); });
+  contrastSeg.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return; root.setAttribute('data-contrast',b.dataset.contrastVal); try{localStorage.setItem('nk-contrast',b.dataset.contrastVal);}catch(e){} syncAll(); });
+})();
+</script>
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Просмотр изображения" aria-hidden="true">
+  <button class="lb-close" id="lbClose" aria-label="Закрыть"><span class="material-symbols-outlined">close</span></button>
+  <div class="lb-tools">
+    <button id="lbOut" aria-label="Уменьшить"><span class="material-symbols-outlined">zoom_out</span></button>
+    <button id="lbIn" aria-label="Увеличить"><span class="material-symbols-outlined">zoom_in</span></button>
+    <button id="lbReset" aria-label="Сбросить масштаб"><span class="material-symbols-outlined">fit_screen</span></button>
+  </div>
+  <div class="lb-stage" id="lbStage"><img id="lbImg" alt=""></div>
+</div>
+<script>
+(function(){
+  var lb=document.getElementById('lightbox'), img=document.getElementById('lbImg'), stage=document.getElementById('lbStage');
+  var scale=1, tx=0, ty=0, drag=null;
+  function apply(){ img.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')'; }
+  function reset(){ scale=1; tx=0; ty=0; apply(); }
+  function open(src,alt){ img.src=src; img.alt=alt||''; reset(); lb.classList.add('show'); lb.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+  function close(){ lb.classList.remove('show'); lb.setAttribute('aria-hidden','true'); document.body.style.overflow=''; img.src=''; }
+  function zoom(f,cx,cy){
+    var ns=Math.min(8,Math.max(1,scale*f)); f=ns/scale;
+    if(cx!==undefined){ var r=stage.getBoundingClientRect(); var x=cx-r.left-r.width/2, y=cy-r.top-r.height/2; tx=x-(x-tx)*f; ty=y-(y-ty)*f; }
+    scale=ns; if(scale===1){ tx=0; ty=0; } apply();
+  }
+  document.querySelectorAll('.js-zoom').forEach(function(el){
+    el.style.cursor='zoom-in';
+    el.addEventListener('click',function(){ open(el.src,el.alt); });
+  });
+  document.getElementById('lbClose').addEventListener('click',close);
+  document.getElementById('lbIn').addEventListener('click',function(){ zoom(1.4); });
+  document.getElementById('lbOut').addEventListener('click',function(){ zoom(1/1.4); });
+  document.getElementById('lbReset').addEventListener('click',reset);
+  lb.addEventListener('click',function(e){ if(e.target===lb||e.target===stage) close(); });
+  document.addEventListener('keydown',function(e){ if(lb.classList.contains('show')&&e.key==='Escape') close(); });
+  stage.addEventListener('wheel',function(e){ e.preventDefault(); zoom(e.deltaY<0?1.15:1/1.15,e.clientX,e.clientY); },{passive:false});
+  img.addEventListener('dblclick',function(e){ scale>1?reset():zoom(2,e.clientX,e.clientY); });
+  img.addEventListener('pointerdown',function(e){ if(scale<=1)return; e.preventDefault(); drag={x:e.clientX-tx,y:e.clientY-ty}; img.setPointerCapture(e.pointerId); img.style.cursor='grabbing'; });
+  img.addEventListener('pointermove',function(e){ if(!drag)return; tx=e.clientX-drag.x; ty=e.clientY-drag.y; apply(); });
+  img.addEventListener('pointerup',function(){ drag=null; img.style.cursor=''; });
+})();
+</script>
+<script src="app.js"></script>
+<!-- Яндекс.Метрика: вставить счётчик сюда (заменить NNNNNNNN на номер счётчика), затем раскомментировать -->
+<!--
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+   ym(NNNNNNNN, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/NNNNNNNN" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+-->
+</body>
+</html>

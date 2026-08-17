@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark" data-contrast="standard">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Киоск самообслуживания — Кейс · Наталия Курляндская</title>
+<meta name="description" content="Киоск самообслуживания — библиотека компонентов, собранная с нуля, и рабочий прототип на Flutter. Кейс Наталии Курляндской.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Serif:opsz,wght@8..144,400;8..144,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ TOP APP BAR ============ -->
+<header class="appbar">
+  <div class="wrap appbar-inner">
+    <a class="brand" href="index.html#top">Наталия&nbsp;<b>Курляндская</b></a>
+    <nav class="nav">
+      <a class="case-back" href="trips.html"><span class="material-symbols-outlined">arrow_back</span>Предыдущий кейс</a>
+      <a class="case-fwd" href="tellsy.html">Следующий кейс<span class="material-symbols-outlined">arrow_forward</span></a>
+      <div class="display-wrap">
+        <button class="icon-btn" id="displayBtn" aria-label="Настройки отображения" aria-expanded="false" title="Тема и контраст">
+          <span class="material-symbols-outlined">contrast</span>
+        </button>
+        <div class="panel" id="displayPanel" role="dialog" aria-label="Настройки отображения">
+          <div class="group">
+            <h3>Тема</h3>
+            <div class="seg" id="themeSeg" role="group" aria-label="Тема">
+              <button data-theme-val="light" aria-pressed="true"><span class="material-symbols-outlined">light_mode</span>Светлая</button>
+              <button data-theme-val="dark" aria-pressed="false"><span class="material-symbols-outlined">dark_mode</span>Тёмная</button>
+            </div>
+          </div>
+          <div class="group">
+            <h3>Контраст</h3>
+            <p class="hint">Посмотрите страницу с любым уровнем контраста.</p>
+            <div class="seg" id="contrastSeg" role="group" aria-label="Контраст">
+              <button data-contrast-val="standard" aria-pressed="true">Стандартный</button>
+              <button data-contrast-val="medium" aria-pressed="false">Средний</button>
+              <button data-contrast-val="high" aria-pressed="false">Высокий</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ CASE HERO ============ -->
+<section class="case-hero">
+  <div class="wrap">
+    <span class="eyebrow case-eyebrow" style="display:flex;width:fit-content"><span class="dot"></span>Киоск · POS · Дизайн-система + прототип на Flutter</span>
+    <h1 class="case-title">Киоск самообслуживания</h1>
+    <p class="case-sum">Киоск самообслуживания для продажи билетов на наземном транспорте. Я собрала полную библиотеку компонентов с нуля и сделала рабочий прототип на Flutter — выстроив спокойный флоу бронирования с одним действием на экран, который любой может пройти без сотрудников и обучения.</p>
+    <div class="case-meta">
+      <div class="m"><span class="k">Тип</span><span class="v">Новая фича, 0→1</span></div>
+      <div class="m"><span class="k">Для кого</span><span class="v">Туристы и местные, покупающие билеты. Сотрудники кассы</span></div>
+      <div class="m"><span class="k">Проблема</span><span class="v">Нагрузка на сотрудников, время на задачу и языковой барьер для пассажиров</span></div>
+      <div class="m"><span class="k">Метрики</span><span class="v">Частота ошибок, время на задачу, частота обращений за помощью</span></div>
+      <div class="m"><span class="k">Что улучшаем</span><span class="v">Конверсия — бронирования через новый канал продаж</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+<div class="case-body">
+
+  <section class="case-section">
+    <span class="label">Discovery</span>
+    <h2>Изучение киосков в реальной среде</h2>
+    <p>Прежде чем что-либо проектировать, я собрала референсы киосков самообслуживания в транспорте и билетных сервисах — изучая форм-факторы, компоновку экранов и паттерны взаимодействия, чтобы определить правильную модель для нашего.</p>
+    <div class="kiosk-research" id="kioskResearch" oncontextmenu="return false" style="background-image:url('assets/kiosk/research.png')">
+      <span class="rb"><span class="material-symbols-outlined">visibility</span>Доска референсов — только просмотр</span>
+    </div>
+    <p>Я также провела полевое исследование, чтобы собрать основные боли людей, покупающих билеты в киосках самообслуживания, и посмотрела статистику о том, откуда приезжают пользователи. Поскольку сразу предложить мультиязычную поддержку мы не могли, я сделала вывод: интерфейс должен быть предельно понятным даже для того, кто не говорит ни по-английски, ни по-тайски.</p>
+    <div class="stickies">
+      <div class="sticky">Большинство туристов приезжают из <b>Китая и Индии</b>. Главная боль — <b>язык интерфейса</b>.</div>
+      <div class="sticky"><b>Виртуальная клавиатура</b> вызывает больше всего трудностей — особенно у пожилых пользователей.</div>
+      <div class="sticky">Станциям при <b>ж/д узлах или аэропортах</b> нужна иконка — созданные оператором названия станций сбивают пользователей с толку, особенно в спешке.</div>
+      <div class="sticky">Большинство покупок было <b>на сегодня</b> — чтобы уехать прямо сейчас.</div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Вызов</span>
+    <h2>Спроектировано для многих операторов, а не для одного</h2>
+    <p>Этот киоск проектировался не для конкретной компании с известным, предсказуемым набором данных — а для множества разных операторов. Невозможно было заранее предсказать, где появятся дополнительные услуги, а также где и какие данные пассажиров потребуются.</p>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Цель дизайна</span>
+    <h2>Минимизировать трение и когнитивную нагрузку</h2>
+    <p>Мультиязычная поддержка не могла войти в первый релиз, поэтому флоу должен был работать для любого — независимо от скорости чтения или привычности. Целью был максимально упрощённый флоу: одно действие на экран. Это удерживает когнитивную нагрузку низкой, снимает потребность в сотрудниках и обучении и делает каждый шаг безошибочно понятным на большом тач-дисплее.</p>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Дизайн-система и сборка</span>
+    <h2>Сделано, чтобы выпускать, а не только показывать</h2>
+    <p>Я собрала всю библиотеку компонентов с нуля — каждую кнопку, поле ввода, цифровую клавиатуру, карточку билета и статусное состояние — с единообразными токенами цвета, отступов и тач-таргетами под размер киоска.</p>
+    <p>Затем я сделала рабочий прототип на <b>Flutter</b>. Дизайн был не статичными макетами: он работал на реальном устройстве, поэтому команда могла почувствовать настоящее взаимодействие, проверить тач-эргономику и двигаться прямо к продакшену с гораздо меньшим объёмом переделок.</p>
+    <p>Многие случаи я не документировала на доске — я дорабатывала их прямо в Claude. С готовыми экранами сборка прототипа со всеми правками заняла <b>3 часа</b>.</p>
+    <figure class="board-fig">
+      <img class="js-zoom" src="assets/kiosk/booking-flow-board.jpg" alt="Доска в Figma — флоу бронирования киоска: дата и пассажиры, рейсы, доп. услуги, данные пассажиров, выбор мест, оплата и QR" loading="lazy">
+      <figcaption>Доска флоу бронирования — от выбора даты до оплаты и QR. Нажмите для увеличения.</figcaption>
+    </figure>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Юзабилити-тестирование</span>
+    <h2>Протестировано, затем донастроено</h2>
+    <p>Я провела раунд юзабилити-тестирования прототипа и доработала несколько экранов на основе увиденного — подтягивая шаги, где люди колебались, и проясняя моменты, вызывавшие сомнение.</p>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Интерактивный прототип</span>
+    <h2>Попробуйте флоу бронирования</h2>
+    <p class="muted">Настоящий рабочий прототип киоска — пройдите по всему флоу бронирования тапами, прямо как у терминала.</p>
+    <div class="kiosk-device">
+      <div class="kiosk-screen">
+        <iframe src="https://seatos-kiosk-prototype.netlify.app/" title="Прототип киоска самообслуживания SeatOS" loading="lazy" allowfullscreen></iframe>
+      </div>
+      <div class="kiosk-base"></div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <span class="label">В эксплуатации</span>
+    <h2>Работает на терминале</h2>
+    <figure class="case-figure shot">
+      <img src="assets/kiosk/installed.png" alt="Киоск, установленный на паромном терминале" onerror="this.remove()">
+      <div class="ph"><span class="material-symbols-outlined">image</span><span class="t">Положите <b>assets/kiosk/installed.png</b> — фото установленного киоска</span></div>
+    </figure>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Результат</span>
+    <div class="case-metrics">
+      <div class="stat"><div class="n">Почти ноль</div><div class="l">частота обращений за помощью на установленных киосках</div></div>
+      <div class="stat"><div class="n">Снижена</div><div class="l">нагрузка на сотрудников — значительно ниже</div></div>
+      <div class="stat"><div class="n">Выросла</div><div class="l">удовлетворённость сотрудников и владельцев бизнеса</div></div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="case-next">
+      <a class="btn btn-outline" href="index.html#work"><span class="material-symbols-outlined">arrow_back</span>Все проекты</a>
+      <a class="btn btn-filled js-mail" href="#" data-u="natk72" data-d="gmail.com"><span class="material-symbols-outlined">mail</span>Связаться</a>
+    </div>
+    <p class="copyright">© 2026 Наталия Курляндская · Собрано на токенах Material Design 3.</p>
+  </div>
+</footer>
+
+<script>
+/* shared theme + contrast control */
+(function(){
+  var root=document.documentElement;
+  var btn=document.getElementById('displayBtn');
+  var panel=document.getElementById('displayPanel');
+  var themeSeg=document.getElementById('themeSeg');
+  var contrastSeg=document.getElementById('contrastSeg');
+  try{
+    var st=localStorage.getItem('nk-theme'), sc=localStorage.getItem('nk-contrast');
+    if(!st && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){ st='dark'; }
+    if(st) root.setAttribute('data-theme',st);
+    if(sc) root.setAttribute('data-contrast',sc);
+  }catch(e){}
+  function syncAll(){
+    themeSeg.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed',String(b.dataset.themeVal===root.getAttribute('data-theme'))); });
+    contrastSeg.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed',String(b.dataset.contrastVal===root.getAttribute('data-contrast'))); });
+  }
+  syncAll();
+  function openPanel(o){ panel.classList.toggle('open',o); btn.setAttribute('aria-expanded',String(o)); }
+  btn.addEventListener('click',function(e){ e.stopPropagation(); openPanel(!panel.classList.contains('open')); });
+  document.addEventListener('click',function(e){ if(!panel.contains(e.target)&&e.target!==btn) openPanel(false); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') openPanel(false); });
+  themeSeg.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return; root.setAttribute('data-theme',b.dataset.themeVal); try{localStorage.setItem('nk-theme',b.dataset.themeVal);}catch(e){} syncAll(); });
+  contrastSeg.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return; root.setAttribute('data-contrast',b.dataset.contrastVal); try{localStorage.setItem('nk-contrast',b.dataset.contrastVal);}catch(e){} syncAll(); });
+})();
+/* block drag-save on the research board */
+(function(){ var r=document.getElementById('kioskResearch'); if(r) r.addEventListener('dragstart',function(e){e.preventDefault();}); })();
+</script>
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Просмотр изображения" aria-hidden="true">
+  <button class="lb-close" id="lbClose" aria-label="Закрыть"><span class="material-symbols-outlined">close</span></button>
+  <div class="lb-tools">
+    <button id="lbOut" aria-label="Уменьшить"><span class="material-symbols-outlined">zoom_out</span></button>
+    <button id="lbIn" aria-label="Увеличить"><span class="material-symbols-outlined">zoom_in</span></button>
+    <button id="lbReset" aria-label="Сбросить масштаб"><span class="material-symbols-outlined">fit_screen</span></button>
+  </div>
+  <div class="lb-stage" id="lbStage"><img id="lbImg" alt=""></div>
+</div>
+<script>
+(function(){
+  var lb=document.getElementById('lightbox'), img=document.getElementById('lbImg'), stage=document.getElementById('lbStage');
+  var scale=1, tx=0, ty=0, drag=null;
+  function apply(){ img.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')'; }
+  function reset(){ scale=1; tx=0; ty=0; apply(); }
+  function open(src,alt){ img.src=src; img.alt=alt||''; reset(); lb.classList.add('show'); lb.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+  function close(){ lb.classList.remove('show'); lb.setAttribute('aria-hidden','true'); document.body.style.overflow=''; img.src=''; }
+  function zoom(f,cx,cy){
+    var ns=Math.min(8,Math.max(1,scale*f)); f=ns/scale;
+    if(cx!==undefined){ var r=stage.getBoundingClientRect(); var x=cx-r.left-r.width/2, y=cy-r.top-r.height/2; tx=x-(x-tx)*f; ty=y-(y-ty)*f; }
+    scale=ns; if(scale===1){ tx=0; ty=0; } apply();
+  }
+  document.querySelectorAll('.js-zoom').forEach(function(el){
+    el.style.cursor='zoom-in';
+    el.addEventListener('click',function(){ open(el.src,el.alt); });
+  });
+  document.getElementById('lbClose').addEventListener('click',close);
+  document.getElementById('lbIn').addEventListener('click',function(){ zoom(1.4); });
+  document.getElementById('lbOut').addEventListener('click',function(){ zoom(1/1.4); });
+  document.getElementById('lbReset').addEventListener('click',reset);
+  lb.addEventListener('click',function(e){ if(e.target===lb||e.target===stage) close(); });
+  document.addEventListener('keydown',function(e){ if(lb.classList.contains('show')&&e.key==='Escape') close(); });
+  stage.addEventListener('wheel',function(e){ e.preventDefault(); zoom(e.deltaY<0?1.15:1/1.15,e.clientX,e.clientY); },{passive:false});
+  img.addEventListener('dblclick',function(e){ scale>1?reset():zoom(2,e.clientX,e.clientY); });
+  img.addEventListener('pointerdown',function(e){ if(scale<=1)return; e.preventDefault(); drag={x:e.clientX-tx,y:e.clientY-ty}; img.setPointerCapture(e.pointerId); img.style.cursor='grabbing'; });
+  img.addEventListener('pointermove',function(e){ if(!drag)return; tx=e.clientX-drag.x; ty=e.clientY-drag.y; apply(); });
+  img.addEventListener('pointerup',function(){ drag=null; img.style.cursor=''; });
+})();
+</script>
+<script src="app.js"></script>
+<!-- Яндекс.Метрика: вставить счётчик сюда (заменить NNNNNNNN на номер счётчика), затем раскомментировать -->
+<!--
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+   ym(NNNNNNNN, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/NNNNNNNN" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+-->
+</body>
+</html>

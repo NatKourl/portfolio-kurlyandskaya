@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark" data-contrast="standard">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Наталия Курляндская — продуктовый дизайнер</title>
+<meta name="description" content="Старший продуктовый дизайнер. Корпоративный B2B SaaS, дизайн-системы, AI-first интерфейсы. Продуктовый дизайн от исследования до реализации.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Serif:opsz,wght@8..144,400;8..144,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ TOP APP BAR ============ -->
+<header class="appbar">
+  <div class="wrap appbar-inner">
+    <a class="brand" href="#top">Наталия&nbsp;<b>Курляндская</b></a>
+    <nav class="nav">
+      <a class="navlink" href="#about">Обо мне</a>
+      <a class="navlink" href="#work">Проекты</a>
+      <a class="navlink" href="#contact">Контакты</a>
+
+      <div class="ai-wrap">
+        <button class="ai-btn" id="aiBtn" aria-label="Открыть AI-ассистента">
+          <span class="material-symbols-outlined">auto_awesome</span><span class="ai-btn-t">AI-ассистент</span>
+        </button>
+        <div class="coach" id="coachAI" role="dialog" aria-label="Подсказка про AI-ассистента">
+          <div class="coach-step">2 / 2</div>
+          <p>А ещё здесь есть AI-ассистент — лень скроллить? Просто спроси, и он отведёт тебя куда нужно.</p>
+          <div class="coach-actions">
+            <button class="coach-skip" data-coach-dismiss>Может, позже</button>
+            <button class="coach-next" id="coachOpenChat">Спроси меня</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="display-wrap">
+        <button class="icon-btn" id="displayBtn" aria-label="Настройки отображения" aria-expanded="false" title="Тема и контраст">
+          <span class="material-symbols-outlined">contrast</span>
+        </button>
+        <div class="coach" id="coachTheme" role="dialog" aria-label="Подсказка про тему">
+          <div class="coach-step">1 / 2</div>
+          <p>Уважаю, как тебе удобнее читать — поэтому контраст выбираешь ты: светлая, тёмная и три уровня контраста.</p>
+          <div class="coach-actions">
+            <button class="coach-skip" data-coach-dismiss>Пропустить</button>
+            <button class="coach-next" id="coachToAI">Далее</button>
+          </div>
+        </div>
+        <div class="panel" id="displayPanel" role="dialog" aria-label="Настройки отображения">
+          <div class="group">
+            <h3>Тема</h3>
+            <div class="seg" id="themeSeg" role="group" aria-label="Тема">
+              <button data-theme-val="light" aria-pressed="true"><span class="material-symbols-outlined">light_mode</span>Светлая</button>
+              <button data-theme-val="dark" aria-pressed="false"><span class="material-symbols-outlined">dark_mode</span>Тёмная</button>
+            </div>
+          </div>
+          <div class="group">
+            <h3>Контраст</h3>
+            <p class="hint">Посмотрите страницу при любом уровне контраста.</p>
+            <div class="seg" id="contrastSeg" role="group" aria-label="Контраст">
+              <button data-contrast-val="standard" aria-pressed="true">Стандартный</button>
+              <button data-contrast-val="medium" aria-pressed="false">Средний</button>
+              <button data-contrast-val="high" aria-pressed="false">Высокий</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span>Наталия Курляндская · старший продуктовый дизайнер</span>
+      <h1>Продуктовый дизайн<br>от исследования до реализации</h1>
+      <p class="tagline">Решения на данных, результат для пользователя — для сложных, насыщенных данными корпоративных продуктов.</p>
+      <div class="hero-cta">
+        <a class="btn btn-filled" href="#work"><span class="material-symbols-outlined">grid_view</span>Смотреть проекты</a>
+        <a class="btn btn-outline" href="#contact"><span class="material-symbols-outlined">mail</span>Связаться</a>
+      </div>
+    </div>
+    <div class="hero-illu">
+      <!-- Product Design triad — static, with electric current running along the links -->
+      <div class="triad" id="triad" role="img" aria-label="Продуктовый дизайн в центре Технологий, Бизнеса и Пользователей, с ключевым вопросом каждой стороны">
+        <svg class="triad-links" viewBox="0 0 100 100" aria-hidden="true">
+          <!-- base lines (equilateral triad + spokes) -->
+          <line class="lk" x1="20.1" y1="23" x2="79.9" y2="23"/>
+          <line class="lk" x1="20.1" y1="23" x2="50" y2="74.75"/>
+          <line class="lk" x1="79.9" y1="23" x2="50" y2="74.75"/>
+          <line class="lk" x1="50" y1="40.3" x2="20.1" y2="23"/>
+          <line class="lk" x1="50" y1="40.3" x2="79.9" y2="23"/>
+          <line class="lk" x1="50" y1="40.3" x2="50" y2="74.75"/>
+          <!-- electric current (running lights) -->
+          <line class="spark" pathLength="100" style="animation-delay:0s"     x1="20.1" y1="23" x2="79.9" y2="23"/>
+          <line class="spark" pathLength="100" style="animation-delay:-.7s"   x1="79.9" y1="23" x2="50" y2="74.75"/>
+          <line class="spark" pathLength="100" style="animation-delay:-1.4s"  x1="50" y1="74.75" x2="20.1" y2="23"/>
+          <line class="spark" pathLength="100" style="animation-delay:-.35s"  x1="20.1" y1="23" x2="50" y2="40.3"/>
+          <line class="spark" pathLength="100" style="animation-delay:-1.05s" x1="79.9" y1="23" x2="50" y2="40.3"/>
+          <line class="spark" pathLength="100" style="animation-delay:-1.75s" x1="50" y1="74.75" x2="50" y2="40.3"/>
+        </svg>
+        <div class="tri-core"><span>ПРОДУКТОВЫЙ<br>ДИЗАЙН</span></div>
+        <div class="tri-node n-tech">
+          <span class="tn-label">Технологии</span>
+          <span class="tn-q">Сможем ли мы это разработать? Сколько это займёт?</span>
+        </div>
+        <div class="tri-node n-biz">
+          <span class="tn-label">Бизнес</span>
+          <span class="tn-q">Помогает ли это достичь наших KPI?</span>
+        </div>
+        <div class="tri-node n-users">
+          <span class="tn-label">Пользователи</span>
+          <span class="tn-q">Даст ли это реальную ценность? Будут ли этим пользоваться?</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS BAND ============ -->
+<section class="stat-band">
+  <div class="wrap">
+    <div class="section-head"><span class="label">В цифрах</span></div>
+    <div class="stats stats-lg">
+      <div class="stat"><div class="n">10+ лет</div><div class="l">в продуктовом дизайне</div></div>
+      <div class="stat"><div class="n">80+</div><div class="l">выпущенных фич на 9 B2B SaaS-платформах</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">редизайна на новых дизайн-системах</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">подопечных выросли в профессии</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="about section-pad">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="label">Обо мне</span>
+      <h2>Делаю сложное понятным</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-edu">
+        <img class="about-photo" src="assets/portrait.jpg" alt="Наталия Курляндская — портрет" loading="lazy">
+        <span class="material-symbols-outlined aside-icon">school</span>
+        <span class="aside-label">Образование и бэкграунд</span>
+        <p>Магистр технических наук. 10+ лет в графическом и веб-дизайне до перехода в продуктовый дизайн.</p>
+        <p>Профессиональное обучение по продуктовому дизайну и UX-исследованиям, продуктовой психологии (Growth.Design) и юзабилити-тестированию (IxDF).</p>
+        <p>Дополнительные сертификаты — в LinkedIn.</p>
+      </div>
+      <div class="about-body">
+        <p>Я старший продуктовый дизайнер, специализируюсь на корпоративном B2B&nbsp;SaaS. За эти годы я спроектировала с нуля четыре масштабных продукта в разных индустриях: фасилитация бизнеса и геймификация, HR и управление жизненным циклом сотрудника, системы управления наземными перевозками (TMS) и аналитические инструменты для бизнеса. Кроме того, я консультировала и разрабатывала фичи ещё для более чем 10 продуктов в разных доменах.</p>
+        <p>Я твёрдо убеждена, что отличные продукты создают команды, а не одиночки. Поэтому я тесно работаю с инженерами, продакт-менеджерами, аналитиками и стейкхолдерами на протяжении всего процесса разработки — ради наилучшего результата.</p>
+        <p>Мне комфортно вести весь дизайн-процесс от начала до конца. Я умею строить масштабируемую дизайн-систему с нуля, когда это нужно, быстро погружаюсь в сложные бизнес-домены, провожу discovery и пользовательские исследования, настраиваю и анализирую продуктовую аналитику, делаю UX-аудиты, провожу юзабилити-тестирование и подбираю подходящий метод исследования под каждую ситуацию. Я не верю в универсальные фреймворки на все случаи — каждый продукт требует своего подхода, исходя из целей, ограничений и доступных данных.</p>
+        <p>У меня также есть опыт частично закрывать роль продакт-менеджера, когда это необходимо: помогать команде формулировать требования, приоритизировать работу и сводить вместе потребности бизнеса и пользователей.</p>
+        <p>Я уверенно перевожу продуктовые идеи в понятные спецификации для инженерных команд, документирую фичи в Figma и делаю всё — от low-fidelity концептов до high-fidelity интерактивных прототипов.</p>
+        <p>В последнее время я активно встраиваю AI в процессы исследований, дизайна и разработки. Я считаю, что AI-ассистенты становятся следующим большим слоем интерфейса для сложного софта — они позволяют пользователю выполнять рутинные операционные задачи через естественный язык или голос. Это направление, в котором мне особенно интересно продолжать.</p>
+      </div>
+    </div>
+    <div class="about-bottom">
+      <div class="chips">
+        <span class="chip">UX-исследования</span>
+        <span class="chip">Юзабилити-тестирование</span>
+        <span class="chip">Дизайн-системы</span>
+        <span class="chip">Прототипирование</span>
+        <span class="chip">AI-first / разговорный интерфейс</span>
+        <span class="chip">Аналитика · Hotjar · GA</span>
+        <span class="chip">Корпоративный B2B SaaS</span>
+      </div>
+      <div class="stats stats-sm">
+        <div class="stat"><div class="n">20–80%</div><div class="l">сокращение времени на ключевых задачах</div></div>
+        <div class="stat"><div class="n">10+</div><div class="l">конкурентных анализов</div></div>
+        <div class="stat"><div class="n">15+</div><div class="l">пользовательских исследований</div></div>
+        <div class="stat"><div class="n">20–50%</div><div class="l">рост вовлечённости</div></div>
+        <div class="stat"><div class="n">2</div><div class="l">полных редизайна</div></div>
+        <div class="stat"><div class="n">60+</div><div class="l">UX-улучшений</div></div>
+        <div class="stat"><div class="n">4</div><div class="l">полных UX-аудита системы</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORK ============ -->
+<section id="work" class="section-pad">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="label">Избранные проекты</span>
+      <h2>Кейсы</h2>
+    </div>
+    <div class="cards">
+
+      <a class="card" href="manifest.html" aria-label="Конструктор шаблонов списка пассажиров">
+        <div class="card-body">
+          <span class="card-cat">TMS · Наземный транспорт</span>
+          <span class="card-title">Конструктор шаблонов списка пассажиров</span>
+          <span class="card-desc">Сборка списков пассажиров из разных шаблонов.</span>
+          <div class="card-foot">
+            <span class="card-tag">Новая фича · 2024</span>
+            <span class="card-arrow"><span class="material-symbols-outlined">arrow_forward</span></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="filters.html" aria-label="Редизайн фильтров в списке бронирований">
+        <div class="card-body">
+          <span class="card-cat">TMS · Наземный транспорт</span>
+          <span class="card-title">Редизайн фильтров в списке бронирований</span>
+          <span class="card-desc">Фильтры на основе аналитики с закреплением под каждого пользователя.</span>
+          <div class="card-foot">
+            <span class="card-tag">UX-улучшение · 2023</span>
+            <span class="card-arrow"><span class="material-symbols-outlined">arrow_forward</span></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="trips.html" aria-label="Список рейсов — мобильная оптимизация">
+        <div class="card-body">
+          <span class="card-cat">TMS · Наземный транспорт</span>
+          <span class="card-title">Список рейсов — мобильная оптимизация</span>
+          <span class="card-desc">Мобильный редизайн десктопной таблицы на основе аналитики.</span>
+          <div class="card-foot">
+            <span class="card-tag">Мобильная оптимизация · 2026</span>
+            <span class="card-arrow"><span class="material-symbols-outlined">arrow_forward</span></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="kiosk.html" aria-label="Киоск самообслуживания">
+        <div class="card-body">
+          <span class="card-cat">TMS · Наземный транспорт</span>
+          <span class="card-title">Киоск самообслуживания</span>
+          <span class="card-desc">Библиотека компонентов + Flutter-прототип. Попробуйте флоу бронирования.</span>
+          <div class="card-foot">
+            <span class="card-tag">Новая фича · 2025</span>
+            <span class="card-arrow"><span class="material-symbols-outlined">arrow_forward</span></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="tellsy.html" aria-label="Tellsy">
+        <div class="card-body">
+          <span class="card-cat">EdTech · 0→1</span>
+          <span class="card-title">Tellsy</span>
+          <span class="card-desc">Платформа для фасилитации, построенная с нуля.</span>
+          <div class="card-foot">
+            <span class="card-tag">Продукт с нуля 0→1 · 2019–2020</span>
+            <span class="card-arrow"><span class="material-symbols-outlined">arrow_forward</span></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="seatos.html" aria-label="TMS для наземного транспорта — SeatOS (в работе)">
+        <span class="card-progress"><span class="material-symbols-outlined">schedule</span>В работе</span>
+        <div class="card-body">
+          <span class="card-cat">TMS · Наземный транспорт</span>
+          <span class="card-title">Редизайн TMS</span>
+          <span class="card-desc">Полный редизайн, дизайн-система и AI-ассистент.</span>
+          <div class="card-foot">
+            <span class="card-tag">Сквозной редизайн · 2023</span>
+            <span class="card-arrow"><span class="material-symbols-outlined">arrow_forward</span></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="dashboard.html" aria-label="Редизайн дашборда">
+        <div class="card-body">
+          <span class="card-cat">HR Tech · Дашборд</span>
+          <span class="card-title">Редизайн дашборда</span>
+          <span class="card-desc">Общее ядро дашборда для множества ролей пользователей.</span>
+          <div class="card-foot">
+            <span class="card-tag">UX-улучшение · 2021</span>
+            <span class="card-arrow"><span class="material-symbols-outlined">arrow_forward</span></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="iqhr.html" aria-label="Форма сотрудника — выбор локации">
+        <div class="card-body">
+          <span class="card-cat">HR Tech · UX</span>
+          <span class="card-title">Форма сотрудника — выбор локации</span>
+          <span class="card-desc">Поиск по адресу вместо 10-уровневого дерева; −90% времени на задачу.</span>
+          <div class="card-foot">
+            <span class="card-tag">UX-улучшение · 2022</span>
+            <span class="card-arrow"><span class="material-symbols-outlined">arrow_forward</span></span>
+          </div>
+        </div>
+      </a>
+
+
+      <a class="card disabled" aria-disabled="true" aria-label="Режим POS (в работе)">
+        <span class="card-progress"><span class="material-symbols-outlined">schedule</span>В работе</span>
+        <div class="card-body">
+          <span class="card-cat">TMS · Наземный транспорт</span>
+          <span class="card-title">Режим POS</span>
+          <span class="card-desc">Интерфейс терминала для быстрого бронирования и регистрации.</span>
+          <div class="card-foot">
+            <span class="card-tag">Новая фича · 2023</span>
+            <span class="card-arrow off"><span class="material-symbols-outlined">arrow_forward</span></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card disabled" aria-disabled="true" aria-label="Туры в мобильной версии (в работе)">
+        <span class="card-progress"><span class="material-symbols-outlined">schedule</span>В работе</span>
+        <div class="card-body">
+          <span class="card-cat">TMS · Наземный транспорт · Мобайл</span>
+          <span class="card-title">Туры в мобильной версии</span>
+          <span class="card-desc">Мобильный опыт для флоу управления турами.</span>
+          <div class="card-foot">
+            <span class="card-tag">UX-улучшение · 2024</span>
+            <span class="card-arrow off"><span class="material-symbols-outlined">arrow_forward</span></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card disabled" aria-disabled="true" aria-label="Регистрация (в работе)">
+        <span class="card-progress"><span class="material-symbols-outlined">schedule</span>В работе</span>
+        <div class="card-body">
+          <span class="card-cat">TMS · Наземный транспорт · Регистрация</span>
+          <span class="card-title">Регистрация (check-in)</span>
+          <span class="card-desc">Регистрация пассажиров для операторов, включая QR-сканер.</span>
+          <div class="card-foot">
+            <span class="card-tag">Новая фича · 2025</span>
+            <span class="card-arrow off"><span class="material-symbols-outlined">arrow_forward</span></span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER / CONTACT ============ -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h2>Давайте обсудим</h2>
+      </div>
+      <div class="foot-links">
+        <a class="js-mail" href="#" data-u="natk72" data-d="gmail.com" data-show><span class="material-symbols-outlined">mail</span><span data-mail>написать мне</span></a>
+        <a href="https://www.linkedin.com/in/natalia-kurlyandskaya" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <p class="copyright">© 2026 Наталия Курляндская · Собрано на токенах Material Design 3.</p>
+  </div>
+</footer>
+
+</main>
+
+<!-- ============ AI ASSISTANT (playful demo) ============ -->
+<div class="chat" id="chat" aria-live="polite">
+  <div class="chat-head">
+    <div class="chat-id">
+      <span class="chat-avatar"><span class="material-symbols-outlined">auto_awesome</span></span>
+      <div>
+        <div class="chat-name">AI Наталии <span class="chat-badge">демо</span></div>
+        <div class="chat-sub"><span class="chat-dot"></span>Онлайн · немного перебрал кофе</div>
+      </div>
+    </div>
+    <button class="icon-btn chat-close" id="chatClose" aria-label="Закрыть чат"><span class="material-symbols-outlined">close</span></button>
+  </div>
+  <div class="chat-log" id="chatLog"></div>
+  <div class="chat-chips" id="chatChips"></div>
+  <form class="chat-input" id="chatForm" autocomplete="off">
+    <input id="chatText" type="text" placeholder="Спроси что угодно…" aria-label="Сообщение">
+    <button type="submit" class="chat-send" aria-label="Отправить"><span class="material-symbols-outlined">arrow_upward</span></button>
+  </form>
+  <div class="chat-foot">Игровое демо · вдохновлено AI-ассистентом, которого я сделала для SeatOS</div>
+</div>
+<div class="coach-scrim" id="coachScrim"></div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var btn = document.getElementById('displayBtn');
+  var panel = document.getElementById('displayPanel');
+  var themeSeg = document.getElementById('themeSeg');
+  var contrastSeg = document.getElementById('contrastSeg');
+
+  // ---- default theme is always dark on each new entry ----
+  root.setAttribute('data-theme', 'dark');
+  try{
+    var savedContrast = localStorage.getItem('nk-contrast');
+    if(savedContrast) root.setAttribute('data-contrast', savedContrast);
+  }catch(e){}
+
+  function sync(seg, attr){
+    var cur = root.getAttribute(attr);
+    seg.querySelectorAll('button').forEach(function(b){
+      var v = b.getAttribute('data-'+attr.replace('data-','')+'-val') || b.getAttribute(attr+'-val');
+      b.setAttribute('aria-pressed', String(v===cur));
+    });
+  }
+  function syncAll(){
+    themeSeg.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.themeVal===root.getAttribute('data-theme')));
+    });
+    contrastSeg.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.contrastVal===root.getAttribute('data-contrast')));
+    });
+  }
+  syncAll();
+
+  // ---- panel open/close ----
+  function openPanel(o){
+    panel.classList.toggle('open', o);
+    btn.setAttribute('aria-expanded', String(o));
+  }
+  btn.addEventListener('click', function(e){ e.stopPropagation(); openPanel(!panel.classList.contains('open')); });
+  document.addEventListener('click', function(e){ if(!panel.contains(e.target) && e.target!==btn) openPanel(false); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') openPanel(false); });
+
+  // ---- segmented controls ----
+  themeSeg.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    root.setAttribute('data-theme', b.dataset.themeVal);
+    try{ localStorage.setItem('nk-theme', b.dataset.themeVal); }catch(e){}
+    syncAll();
+  });
+  contrastSeg.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    root.setAttribute('data-contrast', b.dataset.contrastVal);
+    try{ localStorage.setItem('nk-contrast', b.dataset.contrastVal); }catch(e){}
+    syncAll();
+  });
+})();
+
+/* ============ Coachmarks + AI assistant ============ */
+(function(){
+  var aiBtn=document.getElementById('aiBtn');
+  var coachTheme=document.getElementById('coachTheme');
+  var coachAI=document.getElementById('coachAI');
+  var scrim=document.getElementById('coachScrim');
+  var chat=document.getElementById('chat');
+  var chatLog=document.getElementById('chatLog');
+  var chatChips=document.getElementById('chatChips');
+  var chatForm=document.getElementById('chatForm');
+  var chatText=document.getElementById('chatText');
+  var chatClose=document.getElementById('chatClose');
+
+  /* ---------- onboarding coachmarks ---------- */
+  function seen(){ try{return sessionStorage.getItem('nk-coach-seen')==='1';}catch(e){return false;} }
+  function markSeen(){ try{ sessionStorage.setItem('nk-coach-seen','1'); }catch(e){} }
+  function finishCoach(){
+    coachTheme.classList.remove('open'); coachAI.classList.remove('open'); scrim.classList.remove('show');
+    aiBtn.classList.remove('pulse');
+    markSeen();
+  }
+  function startCoach(){
+    if(seen()) return;
+    markSeen();
+    aiBtn.classList.add('pulse');
+    setTimeout(function(){ scrim.classList.add('show'); coachTheme.classList.add('open'); }, 900);
+  }
+  document.getElementById('coachToAI').addEventListener('click', function(){
+    coachTheme.classList.remove('open');
+    setTimeout(function(){ coachAI.classList.add('open'); }, 160);
+  });
+  document.getElementById('coachOpenChat').addEventListener('click', function(){ finishCoach(); openChat(); });
+  document.querySelectorAll('[data-coach-dismiss]').forEach(function(b){ b.addEventListener('click', finishCoach); });
+  scrim.addEventListener('click', finishCoach);
+
+  /* ---------- chat open/close ---------- */
+  var started=false;
+  function openChat(){
+    chat.classList.add('open'); aiBtn.classList.remove('pulse');
+    if(!started){ started=true; greet(); }
+    setTimeout(function(){ chatText.focus(); }, 300);
+  }
+  function closeChat(){ chat.classList.remove('open'); }
+  aiBtn.addEventListener('click', function(){ chat.classList.contains('open')?closeChat():openChat(); });
+  chatClose.addEventListener('click', closeChat);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeChat(); });
+
+  /* ---------- message rendering ---------- */
+  function scrollLog(){ chatLog.scrollTop=chatLog.scrollHeight; }
+  function addUser(text){
+    var d=document.createElement('div'); d.className='msg user'; d.textContent=text;
+    chatLog.appendChild(d); scrollLog();
+  }
+  function addBot(reply){
+    var d=document.createElement('div'); d.className='msg bot';
+    d.innerHTML=reply.text.replace(/\n/g,'<br>');
+    (reply.actions||[]).forEach(function(a){
+      var btn=document.createElement('button'); btn.className='act';
+      btn.innerHTML='<span class="material-symbols-outlined">'+(a.icon||'arrow_forward')+'</span>'+a.label;
+      btn.addEventListener('click', function(){
+        if(a.scroll){ var el=document.querySelector(a.scroll); if(el) el.scrollIntoView({behavior:'smooth'}); }
+        if(a.href){ window.location.href=a.href; }
+      });
+      d.appendChild(btn);
+    });
+    chatLog.appendChild(d); scrollLog();
+  }
+  function typing(cb){
+    var t=document.createElement('div'); t.className='typing';
+    t.innerHTML='<span></span><span></span><span></span>';
+    chatLog.appendChild(t); scrollLog();
+    setTimeout(function(){ t.remove(); cb(); }, 650+Math.random()*350);
+  }
+  function botSay(reply){ typing(function(){ addBot(reply); }); }
+
+  /* ---------- chips ---------- */
+  var CHIPS=['Кто она?','Лучший проект?','Можно её нанять?','Удиви меня'];
+  function renderChips(){
+    chatChips.innerHTML='';
+    CHIPS.forEach(function(c){
+      var b=document.createElement('button'); b.className='chat-chip'; b.textContent=c;
+      b.addEventListener('click', function(){ handle(c); });
+      chatChips.appendChild(b);
+    });
+  }
+
+  function greet(){
+    renderChips();
+    botSay({text:"Привет! Я AI-ассистент Наталии — игровое демо, как то, что она встроила в SeatOS. 👋<br><br>Скроллить — это так 2010-й. Спроси что угодно или нажми подсказку ниже."});
+  }
+
+  /* ---------- intents ---------- */
+  var JOKES=[
+    "Почему UX-дизайнер перешёл дорогу? Исследование показало, что пользователи именно там. 🚸",
+    "Рассказал бы шутку про whitespace… но дам ей подышать. 🧘",
+    "UX-дизайнер заходит в бар, врезается в стул, врезается в стол. И говорит: «Видите? Пользователи никогда не идут туда, где вы их ждёте!»",
+    "Моё любимое цветовое пространство — между <i>final</i> и <i>final_v2_ТОЧНО_final</i>. 🎨"
+  ];
+  function has(s,arr){ for(var i=0;i<arr.length;i++){ if(s.indexOf(arr[i])>-1) return true; } return false; }
+
+  function reply(raw){
+    var s=raw.toLowerCase();
+    if(has(s,['seatos','seat os','tms','транспорт','автобус','travelier']))
+      return {text:"<b>SeatOS</b> — её главный проект. B2B-платформа управления перевозками, которую она редизайнила сквозным образом: новая дизайн-система с нуля, −40% времени на задачу, интерфейсы для POS-терминалов и киосков самообслуживания и встроенный AI-ассистент (мой более крутой кузен 😎). Заняло 8 месяцев.",actions:[{label:'Показать SeatOS',icon:'directions_bus',scroll:'#work'}]};
+    if(has(s,['киоск','kiosk','самообслуж','pos','терминал']))
+      return {text:"<b>Киоск самообслуживания</b> — тач-интерфейс для продажи билетов на терминалах без персонала. Крупные цели, спокойные флоу, ясность без сотрудника рядом.",actions:[{label:'Показать киоск',icon:'point_of_sale',scroll:'#work'}]};
+    if(has(s,['hr','iqhr','ростелеком','рекрут','найм','кандидат']))
+      return {text:"Два <b>HR / IQHR</b> кейса в Ростелекоме — насыщенный данными дашборд рекрутинга и UX-исследование, которое распутало флоу найма и сократило время на задачу примерно на 50%.",actions:[{label:'Показать HR-кейсы',icon:'dashboard',scroll:'#work'}]};
+    if(has(s,['tellsy','фасилит','брейншторм','воркшоп']))
+      return {text:"<b>Tellsy</b> — платформа для фасилитации, которую она построила 0→1 как единственный дизайнер, а потом вела как продакт-менеджер. Что-то вроде Slido/Mentimeter с геймификацией.",actions:[{label:'Открыть Tellsy',icon:'groups',scroll:'#work'}]};
+    if(has(s,['лучший проект','проект','портфолио','кейс','работ','покажи']))
+      return {text:"Пять кейсов: <b>SeatOS</b> (главный), <b>Киоск самообслуживания</b>, два <b>HR/IQHR</b> исследования и <b>Tellsy</b>. Отвести тебя к стене работ?",actions:[{label:'К проектам — для тебя',icon:'grid_view',scroll:'#work'}]};
+    if(has(s,['кто','обо мне','о себе','наталия','бэкграунд','опыт','она ']) || s==='кто она?')
+      return {text:"<b>Наталия Курляндская</b> — старший продуктовый дизайнер, корпоративный B2B SaaS. Исследование → интерфейс → релиз. 10+ лет, магистр технических наук, строит дизайн-системы с нуля, и да — научила AI общаться с операторами автобусов.",actions:[{label:'Читать «Обо мне»',icon:'person',scroll:'#about'}]};
+    if(has(s,['наня','нанять','наём','доступна','вакан','удалён','фриланс','сотруднич','ставка','зарплат']))
+      return {text:"Она <b>открыта к удалёнке</b> (Тель-Авивский округ). Самый быстрый путь — короткое письмо. Или — смотри — я проскроллю тебя к контактам. Тебе скроллить не надо. Пожалуйста. 😌",actions:[{label:'К контактам',icon:'south',scroll:'#contact'},{label:'Написать Наталии',icon:'mail',href:'mailto:'+'natk72'+String.fromCharCode(64)+'gmail.com'}]};
+    if(has(s,['навык','инструм','figma','фигма','hotjar','аналитик','дизайн-систем','исследован','прототип']))
+      return {text:"Инструментарий: UX-исследования и юзабилити-тестирование, дизайн-системы, прототипирование, AI-first / разговорный интерфейс, аналитика (Hotjar, GA), Figma. Инженерная голова, дизайнерское сердце.",actions:[{label:'Навыки в «Обо мне»',icon:'tune',scroll:'#about'}]};
+    if(has(s,['тема','тёмн','темн','светл','контраст','цвет','ультрамарин','палитр']))
+      return {text:"О, коллега-дизайн-нёрд. 🤓 Нажми <b>◑ иконку</b> справа вверху: светлая/тёмная + три уровня контраста — всё сгенерировано в <b>Material 3</b> из ультрамаринового seed. Попробуй <b>высокий контраст</b>, он хрустящий."};
+    if(has(s,['шутк','смешн','посмея','удиви','весел','развесели']) || s==='удиви меня')
+      return {text:JOKES[Math.floor(Math.random()*JOKES.length)],actions:[{label:'ок, хочу написать',icon:'mail',href:'mailto:'+'natk72'+String.fromCharCode(64)+'gmail.com'},{label:'Ладно, покажи работы',icon:'grid_view',scroll:'#work'}]};
+    if(has(s,['ai','ассистент','бот','ты кто','чатбот','демо']))
+      return {text:"Я <b>скриптовый демо-бот</b> с манией величия — игровой кивок на реального разговорного ассистента, которого Наталия спроектировала для SeatOS (ясность, доверие, human-in-the-loop, всё как надо). Я не думаю; я просто обаяю. ✨"};
+    if(has(s,['привет','здоров','хай','салют','ку ']) || s==='привет' || s==='хай')
+      return {text:"Привет! 👋 Спроси меня про её работы, можно ли её нанять, или скажи <i>удиви меня</i>."};
+    return {text:"Я не волшебник — я ещё учусь 🪄 Если нравится то, что видишь, напиши Наталии. Пока что я обучен только на темах ниже 👇",
+      actions:[{label:'Написать Наталии',icon:'mail',href:'mailto:'+'natk72'+String.fromCharCode(64)+'gmail.com'}]};
+  }
+  function handle(text){ addUser(text); botSay(reply(text)); }
+
+  chatForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var v=chatText.value.trim(); if(!v) return;
+    chatText.value=''; handle(v);
+  });
+
+  startCoach();
+})();
+
+/* ============ Hero carousel ============ */
+(function(){
+  var track=document.getElementById('slides');
+  var dots=document.getElementById('carDots');
+  var cap=document.getElementById('carCap');
+  var prev=document.getElementById('carPrev');
+  var next=document.getElementById('carNext');
+  var carousel=document.getElementById('carousel');
+  if(!track) return;
+  var n=track.children.length, i=0, timer=null;
+  var caps=["Технологии · Бизнес · Пользователи, связанные в продуктовом дизайне.",
+            "Пользователь ищет выход — дизайн его находит."];
+  function go(k){
+    i=(k+n)%n;
+    track.style.transform='translateX('+(-i*100)+'%)';
+    Array.prototype.forEach.call(dots.children,function(d,x){ d.classList.toggle('active',x===i); });
+    cap.textContent=caps[i]||'';
+  }
+  function start(){ stop(); timer=setInterval(function(){ go(i+1); },6000); }
+  function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+  prev.addEventListener('click',function(){ go(i-1); start(); });
+  next.addEventListener('click',function(){ go(i+1); start(); });
+  dots.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; go(+b.dataset.i); start(); });
+  carousel.addEventListener('mouseenter',stop);
+  carousel.addEventListener('mouseleave',start);
+  go(0); start();
+})();
+
+</script>
+<script src="app.js"></script>
+<!-- Яндекс.Метрика: вставить счётчик сюда (заменить NNNNNNNN на номер счётчика), затем раскомментировать -->
+<!--
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+   ym(NNNNNNNN, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/NNNNNNNN" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+-->
+</body>
+</html>

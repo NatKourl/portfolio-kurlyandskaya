@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark" data-contrast="standard">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Список рейсов — мобильная оптимизация · Natalia Kurlyandskaya</title>
+<meta name="description" content="Оптимизация списка рейсов под мобильные устройства — на основе аналитики, только самое нужное. Кейс Natalia Kurlyandskaya.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Serif:opsz,wght@8..144,400;8..144,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="appbar">
+  <div class="wrap appbar-inner">
+    <a class="brand" href="index.html#top">Natalia&nbsp;<b>Kurlyandskaya</b></a>
+    <nav class="nav">
+      <a class="case-back" href="filters.html"><span class="material-symbols-outlined">arrow_back</span>Предыдущий кейс</a>
+      <a class="case-fwd" href="kiosk.html">Следующий кейс<span class="material-symbols-outlined">arrow_forward</span></a>
+      <div class="display-wrap">
+        <button class="icon-btn" id="displayBtn" aria-label="Настройки отображения" aria-expanded="false" title="Тема и контраст">
+          <span class="material-symbols-outlined">contrast</span>
+        </button>
+        <div class="panel" id="displayPanel" role="dialog" aria-label="Настройки отображения">
+          <div class="group">
+            <h3>Тема</h3>
+            <div class="seg" id="themeSeg" role="group" aria-label="Тема">
+              <button data-theme-val="light" aria-pressed="true"><span class="material-symbols-outlined">light_mode</span>Светлая</button>
+              <button data-theme-val="dark" aria-pressed="false"><span class="material-symbols-outlined">dark_mode</span>Тёмная</button>
+            </div>
+          </div>
+          <div class="group">
+            <h3>Контраст</h3>
+            <p class="hint">Посмотрите страницу с любым уровнем контраста.</p>
+            <div class="seg" id="contrastSeg" role="group" aria-label="Контраст">
+              <button data-contrast-val="standard" aria-pressed="true">Стандартный</button>
+              <button data-contrast-val="medium" aria-pressed="false">Средний</button>
+              <button data-contrast-val="high" aria-pressed="false">Высокий</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="case-hero">
+  <div class="wrap">
+    <span class="eyebrow case-eyebrow" style="display:flex;width:fit-content"><span class="dot"></span>SeatOS · Мобайл · На основе аналитики</span>
+    <h1 class="case-title">Список рейсов — мобильная оптимизация</h1>
+    <p class="case-sum">На десктопе список рейсов жил как плотная таблица. Считалось, что на телефоне им никто пользоваться не будет — поэтому я проверила это данными, нашла реальные мобильные сценарии и переработала список так, чтобы он показывал только то, что нужно для быстрого поиска рейса, а все действия убраны в меню.</p>
+    <div class="case-meta">
+      <div class="m"><span class="k">Тип</span><span class="v">UX-улучшение · Мобильная оптимизация</span></div>
+      <div class="m"><span class="k">Для кого</span><span class="v">Менеджеры и владельцы, работающие на ходу</span></div>
+      <div class="m"><span class="k">Проблема</span><span class="v">Десктопная таблица непригодна на мобильном; нужен быстрый доступ к базовым ежедневным операциям вне офиса</span></div>
+      <div class="m"><span class="k">Метрики</span><span class="v">Время на задачу, доля ошибок</span></div>
+      <div class="m"><span class="k">Что улучшаем</span><span class="v">Вовлечённость · DAU/MAU</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+<div class="case-body">
+
+  <section class="case-section">
+    <span class="label">Контекст</span>
+    <h2>Таблица, сделанная под десктоп</h2>
+    <p>В основном десктопном приложении список рейсов был спроектирован как таблица. Исходная гипотеза была простой: на телефоне этой страницей толком никто пользоваться не будет — значит, оптимизировать её под мобильные незачем.</p>
+    <p>При этом у меня не было вообще никаких данных о том, как часто этой страницей пользуются на мобильном — и зачем.</p>
+    <div class="fig-row">
+      <figure class="board-fig">
+        <img class="js-zoom" src="assets/trips/triplist-desktop.png" alt="Список рейсов на десктопе — широкая таблица данных с поиском, фильтрами по датам и колонками загрузки" loading="lazy">
+      </figure>
+      <figure class="board-fig">
+        <img class="js-zoom" src="assets/trips/triplist-narrow.png" alt="Та же таблица списка рейсов, втиснутая в узкий мобильный экран — большинство колонок обрезано" loading="lazy">
+      </figure>
+    </div>
+    <p class="fcase-cap">Список рейсов как он был — десктопная таблица и она же на узком экране. Нажмите, чтобы увеличить.</p>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Проверка гипотезы</span>
+    <h2>Что на самом деле показали данные</h2>
+    <p>Я настроила теги событий в Google Analytics и подключила Hotjar, чтобы проверить предположение. Оказалось, что <b>25% обращений к этой странице шли с мобильных устройств</b>. Частота на пользователя была невысокой — но это случалось по несколько раз в день, в те моменты, когда это было важно.</p>
+    <div class="case-metrics">
+      <div class="stat"><div class="n">25%</div><div class="l">обращений к странице шли с мобильных</div></div>
+      <div class="stat"><div class="n">1–5</div><div class="l">заходов в день на пользователя</div></div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Поиск основного сценария</span>
+    <h2>От сессий к опросу</h2>
+    <p>По сессиям Hotjar было сложно понять, что именно люди пытались сделать. Поэтому я провела дополнительный опрос среди пользователей, чтобы получить контекст за этими тапами. Он выявил два основных операционных сценария, ради которых люди заходили с мобильного — быстрые проверки по ситуации, а не глубокая работа.</p>
+    <p>Ключевой инсайт: люди берутся за систему на мобильном, чтобы выполнить простые операционные действия, требующие изменений на текущую или следующую дату.</p>
+    <div class="stickies">
+      <div class="sticky">Скорректировать <b>время отправления</b>.</div>
+      <div class="sticky">Проверить <b>загрузку</b>.</div>
+      <div class="sticky"><b>Отменить рейс</b> в тот же день.</div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Решение</span>
+    <h2>Только самое нужное, действия в меню</h2>
+    <p>Мобильный дизайн несёт лишь ту информацию, которая нужна, чтобы удобно найти рейс — загрузку, дату и время, маршрут и статус с одного взгляда, — а все действия перенесены в меню конкретного рейса. Получился спокойный, легко просматриваемый список для тех немногих ценных задач, которые люди действительно делают на телефоне.</p>
+    <figure class="board-fig">
+      <img class="js-zoom" src="assets/trips/mobile-triplist-board.svg" alt="Мобильный список рейсов — финальные экраны: список с загрузкой и статусом, фильтры и меню действий по рейсу" loading="lazy">
+      <figcaption>Мобильный список рейсов — экраны с рабочей доски. Нажмите, чтобы увеличить.</figcaption>
+    </figure>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Интерактивный прототип</span>
+    <h2>Попробуйте на мобильном</h2>
+    <p class="muted">Рабочий мобильный прототип с тестовыми данными — нажмите меню <b>⋮</b> у рейса, чтобы увидеть действия, или откройте <b>Фильтры</b>.</p>
+    <div class="phone">
+      <div class="phone-screen">
+        <iframe src="prototype-trips.html" title="Список рейсов — мобильный прототип" loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <span class="label">Результат</span>
+    <div class="case-metrics">
+      <div class="stat"><div class="n">−50%</div><div class="l">времени на задачу в мобильных сценариях</div></div>
+      <div class="stat"><div class="n">Выросла</div><div class="l">частота использования</div></div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="case-next">
+      <a class="btn btn-outline" href="index.html#work"><span class="material-symbols-outlined">arrow_back</span>Все проекты</a>
+      <a class="btn btn-filled js-mail" href="#" data-u="natk72" data-d="gmail.com"><span class="material-symbols-outlined">mail</span>Связаться со мной</a>
+    </div>
+    <p class="copyright">© 2026 Natalia Kurlyandskaya · Собрано на токенах Material Design 3.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var btn=document.getElementById('displayBtn');
+  var panel=document.getElementById('displayPanel');
+  var themeSeg=document.getElementById('themeSeg');
+  var contrastSeg=document.getElementById('contrastSeg');
+  try{
+    var st=localStorage.getItem('nk-theme'), sc=localStorage.getItem('nk-contrast');
+    if(!st && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){ st='dark'; }
+    if(st) root.setAttribute('data-theme',st);
+    if(sc) root.setAttribute('data-contrast',sc);
+  }catch(e){}
+  function syncAll(){
+    themeSeg.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed',String(b.dataset.themeVal===root.getAttribute('data-theme'))); });
+    contrastSeg.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed',String(b.dataset.contrastVal===root.getAttribute('data-contrast'))); });
+  }
+  syncAll();
+  function openPanel(o){ panel.classList.toggle('open',o); btn.setAttribute('aria-expanded',String(o)); }
+  btn.addEventListener('click',function(e){ e.stopPropagation(); openPanel(!panel.classList.contains('open')); });
+  document.addEventListener('click',function(e){ if(!panel.contains(e.target)&&e.target!==btn) openPanel(false); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') openPanel(false); });
+  themeSeg.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return; root.setAttribute('data-theme',b.dataset.themeVal); try{localStorage.setItem('nk-theme',b.dataset.themeVal);}catch(e){} syncAll(); });
+  contrastSeg.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return; root.setAttribute('data-contrast',b.dataset.contrastVal); try{localStorage.setItem('nk-contrast',b.dataset.contrastVal);}catch(e){} syncAll(); });
+})();
+</script>
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Просмотр изображения" aria-hidden="true">
+  <button class="lb-close" id="lbClose" aria-label="Закрыть"><span class="material-symbols-outlined">close</span></button>
+  <div class="lb-tools">
+    <button id="lbOut" aria-label="Уменьшить"><span class="material-symbols-outlined">zoom_out</span></button>
+    <button id="lbIn" aria-label="Увеличить"><span class="material-symbols-outlined">zoom_in</span></button>
+    <button id="lbReset" aria-label="Сбросить масштаб"><span class="material-symbols-outlined">fit_screen</span></button>
+  </div>
+  <div class="lb-stage" id="lbStage"><img id="lbImg" alt=""></div>
+</div>
+<script>
+(function(){
+  var lb=document.getElementById('lightbox'), img=document.getElementById('lbImg'), stage=document.getElementById('lbStage');
+  var scale=1, tx=0, ty=0, drag=null;
+  function apply(){ img.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')'; }
+  function reset(){ scale=1; tx=0; ty=0; apply(); }
+  function open(src,alt){ img.src=src; img.alt=alt||''; reset(); lb.classList.add('show'); lb.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+  function close(){ lb.classList.remove('show'); lb.setAttribute('aria-hidden','true'); document.body.style.overflow=''; img.src=''; }
+  function zoom(f,cx,cy){
+    var ns=Math.min(8,Math.max(1,scale*f)); f=ns/scale;
+    if(cx!==undefined){ var r=stage.getBoundingClientRect(); var x=cx-r.left-r.width/2, y=cy-r.top-r.height/2; tx=x-(x-tx)*f; ty=y-(y-ty)*f; }
+    scale=ns; if(scale===1){ tx=0; ty=0; } apply();
+  }
+  document.querySelectorAll('.js-zoom').forEach(function(el){
+    el.style.cursor='zoom-in';
+    el.addEventListener('click',function(){ open(el.src,el.alt); });
+  });
+  document.getElementById('lbClose').addEventListener('click',close);
+  document.getElementById('lbIn').addEventListener('click',function(){ zoom(1.4); });
+  document.getElementById('lbOut').addEventListener('click',function(){ zoom(1/1.4); });
+  document.getElementById('lbReset').addEventListener('click',reset);
+  lb.addEventListener('click',function(e){ if(e.target===lb||e.target===stage) close(); });
+  document.addEventListener('keydown',function(e){ if(lb.classList.contains('show')&&e.key==='Escape') close(); });
+  stage.addEventListener('wheel',function(e){ e.preventDefault(); zoom(e.deltaY<0?1.15:1/1.15,e.clientX,e.clientY); },{passive:false});
+  img.addEventListener('dblclick',function(e){ scale>1?reset():zoom(2,e.clientX,e.clientY); });
+  img.addEventListener('pointerdown',function(e){ if(scale<=1)return; e.preventDefault(); drag={x:e.clientX-tx,y:e.clientY-ty}; img.setPointerCapture(e.pointerId); img.style.cursor='grabbing'; });
+  img.addEventListener('pointermove',function(e){ if(!drag)return; tx=e.clientX-drag.x; ty=e.clientY-drag.y; apply(); });
+  img.addEventListener('pointerup',function(){ drag=null; img.style.cursor=''; });
+})();
+</script>
+<script src="app.js"></script>
+<!-- Яндекс.Метрика: вставить счётчик сюда (заменить NNNNNNNN на номер счётчика), затем раскомментировать -->
+<!--
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+   ym(NNNNNNNN, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/NNNNNNNN" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+-->
+</body>
+</html>
